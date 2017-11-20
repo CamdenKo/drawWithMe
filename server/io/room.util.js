@@ -1,9 +1,15 @@
-const gen = require('generate-key')
+const possibleKeyOptions = '1234567890qwertyuiopasdfghjklzxcvbnm'.toUpperCase().split('')
 
 const usedKeys = new Set()
 
+const randomCharFromOptions = arrOfChars =>
+  arrOfChars[Math.floor((Math.random() * arrOfChars.length) + 1)]
+
+const generateKey = size =>
+  [...Array(size)].map(() => randomCharFromOptions(possibleKeyOptions)).join('')
+
 const generateUniqueKey = () => {
-  const possibleKey = gen.generateKey(5)
+  const possibleKey = generateKey()
   if (usedKeys.has(possibleKey)) {
     return generateUniqueKey()
   }
