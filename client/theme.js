@@ -1,7 +1,7 @@
 export default {
   typography: {
-    title: 'font-family: \'Montserrat\', sans-serif',
-    body: 'font-family: \'Cardo\', serif',
+    title: 'Montserrat, sans-serif',
+    body: 'Cardo, serif',
   },
   colors: {
     dark: '#6C567B',
