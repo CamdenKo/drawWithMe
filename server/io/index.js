@@ -33,10 +33,11 @@ const setupIO = (server) => {
     })
 
     socket.on('requestSetName', ({ key }) => {
-      if
+
     })
 
     socket.on('disconnect', ({ key }) => {
+      console.log(key)
       delete rooms[key][socket.id]
       if (!Object.keys(rooms[key]).length) {
         removeKey(key)
