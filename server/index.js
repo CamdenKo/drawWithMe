@@ -2,6 +2,8 @@ const morgan = require('morgan')
 const express = require('express')
 const path = require('path')
 
+const setupIO = require('./io')
+
 const PORT = process.env.PORT || 8080
 
 const app = express()
@@ -12,9 +14,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
 })
+app.listen(PORT, () => console.log(`Skrttt skrttt trapping out on port${PORT}`))
 
-const createApp = () => {
-  app.listen(PORT, () => console.log(`Skrttt skrttt trapping out on port${PORT}`))
-}
-
-createApp()
+setupIO(app)
