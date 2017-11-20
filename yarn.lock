@@ -83,6 +83,10 @@ callsite@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/callsite/-/callsite-1.0.0.tgz#280398e5d664bd74038b6f0905153e6e8af1bc20"
 
+coffee-script@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/coffee-script/-/coffee-script-1.6.2.tgz#fd9c88369c1e41e3307a0a160d713f22513c93b3"
+
 component-bind@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/component-bind/-/component-bind-1.0.0.tgz#00c608ab7dcd93897c0009651b1d3a8e1e73bbd1"
@@ -234,6 +238,12 @@ forwarded@~0.1.2:
 fresh@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
+
+generate-key@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/generate-key/-/generate-key-0.0.6.tgz#d58aa2e0774bcea3059caa3b39bc2a08b4dbfa0e"
+  dependencies:
+    coffee-script "1.6.2"
 
 has-binary2@~1.0.2:
   version "1.0.2"
