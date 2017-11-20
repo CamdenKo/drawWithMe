@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js",
+    "start": "node server/index.js",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "build-client": "webpack",
+    "build-client-watch": "webpack --watch",
+    "start-dev": "yarn build-client-watch & nodemon server/index.js"
   },
   "keywords": [],
   "author": "Camden <camdenko@gmail.com> (camdenko.github.io)",
