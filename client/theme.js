@@ -1,6 +1,6 @@
 export default {
   typography: {
-    title: 'Montserrat, sans-serif',
+    header: 'Montserrat, sans-serif',
     body: 'Cardo, serif',
   },
   colors: {

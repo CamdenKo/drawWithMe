@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export default styled.button`
   color: ${({ theme }) => theme.colors.primary};
-  font-family: ${({ theme }) => theme.typography.title};
+  font-family: ${({ theme }) => theme.typography.header};
   font-size: 3rem;
   background: none;
   border-radius: 10rem;
