@@ -9,7 +9,7 @@ const generateKey = size =>
   [...Array(size)].map(() => randomCharFromOptions(possibleKeyOptions)).join('')
 
 const generateUniqueKey = () => {
-  const possibleKey = generateKey()
+  const possibleKey = generateKey(4)
   if (usedKeys.has(possibleKey)) {
     return generateUniqueKey()
   }

@@ -14,6 +14,12 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'))
 })
-const server = app.listen(PORT, () => console.log(`Skrttt skrttt trapping out on port${PORT}`))
 
-setupIO(server)
+const startServer = () => {
+  const server = app.listen(PORT, () => console.log(`Skrttt skrttt trapping out on port${PORT}`))
+  setupIO(server)
+}
+
+if (require.main === module) {
+  startServer()
+}

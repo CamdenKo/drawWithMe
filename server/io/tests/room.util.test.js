@@ -4,6 +4,7 @@ const utils = require('../room.util')
 const {
   randomCharFromOptions,
   generateKey,
+  generateUniqueKey,
 } = utils
 
 describe('room.util', () => {
@@ -30,6 +31,11 @@ describe('room.util', () => {
       const len = 3
       expect(typeof generateKey(len)).toEqual('string')
       expect(generateKey(len).length).toEqual(len)
+    })
+  })
+  describe('generateUniqueKey', () => {
+    it('returns a string with length 4', () => {
+      expect(generateUniqueKey().length).toEqual(4)
     })
   })
 })

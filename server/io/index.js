@@ -11,8 +11,6 @@ const setupIO = (server) => {
   const io = socketio(server)
 
   io.on('connection', (socket) => {
-    console.log('connected', socket.id)
-
     socket.on('requestCreateRoom', () => {
       const key = generateUniqueKey()
       socket.join(key)
@@ -36,11 +34,12 @@ const setupIO = (server) => {
 
     })
 
-    socket.on('disconnect', ({ key }) => {
-      console.log(key)
-      delete rooms[key][socket.id]
-      if (!Object.keys(rooms[key]).length) {
-        removeKey(key)
+    socket.on('disconnect', ({ key }) => { // TODO: key isn't passed in
+      if (rooms[key]) {
+        delete rooms[key][socket.id]
+        if (!Object.keys(rooms[key]).length) {
+          removeKey(key)
+        }
       }
     })
   })
