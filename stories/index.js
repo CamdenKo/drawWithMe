@@ -1,13 +1,16 @@
 import React from 'react';
+import { configure, addDecorator } from '@storybook/react'
+import { Provider } from 'react-redux'
+import { Router } from 'react-router'
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
+import store from '../client/store'
+import history from '../client/history'
 
-import { Button, Welcome } from '@storybook/react/demo';
+const req = require.context('../client/components', true, /\.stories\.js$/)
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+const loadStories = () => req.keys().forEach(file => req(file))
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
+addDecorator(story => (
+  <Provider store={store}><Router history={history}>{story()}</Router></Provider>
+))
+configure(loadStories, module)
