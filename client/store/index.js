@@ -7,8 +7,10 @@ import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-const reducer = combineReducers({
+import room from './room/room'
 
+const reducer = combineReducers({
+  room,
 })
 
 const middleware = composeWithDevTools(applyMiddleware(
@@ -18,3 +20,4 @@ const middleware = composeWithDevTools(applyMiddleware(
 const store = createStore(reducer, middleware)
 
 export default store
+export * from './room/room'
