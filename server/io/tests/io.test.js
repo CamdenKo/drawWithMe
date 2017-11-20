@@ -29,4 +29,31 @@ describe('io', () => {
       done()
     })
   })
+  test('errorJoinRoom will be fired after a request with a nonexistant room key', (done) => {
+    const client1 = io.connect(socketURL)
+    client1.on('connect', () => {
+      client1.emit('requestJoinRoom', { key: '123456' })
+      client1.on('errorJoinRoom', ({ error }) => {
+        expect(error).toBeTruthy()
+        done()
+      })
+    })
+  })
+  test('successJoinRoom will be fired after a request with a successful room key', (done) => {
+    const randomStub = sinon.stub(Math, 'random')
+    randomStub.returns(0)
+    const client1 = io.connect(socketURL)
+    client1.on('connect', () => {
+      client1.emit('requestCreateRoom')
+      const client2 = io.connect(socketURL)
+      client2.on('connect', () => {
+        client2.emit('requestJoinRoom', { key: '1111' })
+        client2.on('successJoinRoom', ({ msg }) => {
+          expect({ msg }).toBeTruthy()
+          done()
+        })
+      })
+    })
+    randomStub.close()
+  })
 })
