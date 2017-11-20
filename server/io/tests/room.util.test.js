@@ -4,7 +4,6 @@ const utils = require('../room.util')
 const {
   randomCharFromOptions,
   generateKey,
-  generateUniqueKey,
 } = utils
 
 describe('room.util', () => {

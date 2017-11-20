@@ -1,2 +1,0 @@
-const requestCreateRoom = (payload)
-
