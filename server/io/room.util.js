@@ -18,5 +18,7 @@ const generateUniqueKey = () => {
 }
 
 module.exports = {
+  randomCharFromOptions,
+  generateKey,
   generateUniqueKey,
 }
