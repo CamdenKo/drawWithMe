@@ -1,19 +1,22 @@
 const sinon = require('sinon')
 
+const utils = require('../room.util')
 const {
   randomCharFromOptions,
-} = require('../room.util')
+  generateKey,
+  generateUniqueKey,
+} = utils
 
 describe('room.util', () => {
   describe('randomCharFromOptions', () => {
     const possibleOptions = 'asdfjkl'.split('')
     const randomStub = sinon.stub(Math, 'random')
-    randomStub.onFirstCall().returns(0)
-    randomStub.onSecondCall().returns(0.999999999999)
     randomStub.returns(0)
 
     it('will return values in the range from the first to last', () => {
+      randomStub.returns(0)
       expect(randomCharFromOptions(possibleOptions)).toEqual('a')
+      randomStub.returns(0.999999999999)
       expect(randomCharFromOptions(possibleOptions)).toEqual('l')
     })
     it('returns a string', () => {
@@ -21,6 +24,13 @@ describe('room.util', () => {
     })
     it('returns string w/ length 1', () => {
       expect(randomCharFromOptions(possibleOptions).length).toEqual(1)
+    })
+  })
+  describe('generateKey', () => {
+    it('will return a string with specified length', () => {
+      const len = 3
+      expect(typeof generateKey(len)).toEqual('string')
+      expect(generateKey(len).length).toEqual(len)
     })
   })
 })
