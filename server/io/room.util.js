@@ -17,8 +17,12 @@ const generateUniqueKey = () => {
   return possibleKey
 }
 
+const removeKey = key =>
+  usedKeys.delete(key)
+
 module.exports = {
   randomCharFromOptions,
   generateKey,
   generateUniqueKey,
+  removeKey,
 }
