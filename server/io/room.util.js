@@ -3,7 +3,7 @@ const possibleKeyOptions = '1234567890qwertyuiopasdfghjklzxcvbnm'.toUpperCase().
 const usedKeys = new Set()
 
 const randomCharFromOptions = arrOfChars =>
-  arrOfChars[Math.floor((Math.random() * arrOfChars.length) + 1)]
+  arrOfChars[Math.floor((Math.random() * arrOfChars.length))]
 
 const generateKey = size =>
   [...Array(size)].map(() => randomCharFromOptions(possibleKeyOptions)).join('')
