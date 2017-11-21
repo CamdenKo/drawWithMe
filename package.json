@@ -17,6 +17,7 @@
   "author": "Camden <camdenko@gmail.com> (camdenko.github.io)",
   "license": "ISC",
   "dependencies": {
+    "chance": "^1.0.12",
     "express": "^4.16.2",
     "history": "^4.7.2",
     "jest": "^21.2.1",

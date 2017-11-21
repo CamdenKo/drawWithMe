@@ -1,4 +1,5 @@
 const socketio = require('socket.io')
+const chance = require('chance')
 
 const {
   generateUniqueKey,
@@ -19,7 +20,12 @@ const setupIO = (server) => {
         rooms[key] = {}
       }
       rooms[key][socket.id] = {}
-      socket.emit('successfulCreateRoom', { key })
+      socket.emit('successfulCreateRoom', {
+        key,
+        users: {
+          [socket.id]: chance.name(),
+        },
+      })
     })
 
     socket.on('requestJoinRoom', ({ key }) => {
