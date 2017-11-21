@@ -57,7 +57,11 @@ export class JoinRoom extends React.Component {
           />
           <ColoredSmallHeader>Room Key</ColoredSmallHeader>
         </InputWrapper>
-        <Button onClick={this.props.onClick}>Enter</Button>
+        <Button
+          onClick={() => this.props.requestJoinRoom(this.props.socket, this.state.inputValue)}
+        >
+          Enter
+        </Button>
       </Parent>
     )
   }
@@ -65,9 +69,10 @@ export class JoinRoom extends React.Component {
 
 const mapState = state => ({
   room: state.room,
+  socket: state.socket,
 })
 
 const mapDispatch = dispatch => ({
-  requestJoinRoom: key => requestJoinRoom(soc)
+  requestJoinRoom: (socket, key) => dispatch(requestJoinRoom(socket, key)),
 })
-export default connect()(JoinRoom)
+export default connect(mapState, mapDispatch)(JoinRoom)
