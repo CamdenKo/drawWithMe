@@ -11,6 +11,7 @@ const setupIO = (server) => {
   const io = socketio(server)
 
   io.on('connection', (socket) => {
+    console.log(`CONNECTION ${socket.id}`)
     socket.on('requestCreateRoom', () => {
       const key = generateUniqueKey()
       socket.join(key)

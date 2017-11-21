@@ -8,13 +8,18 @@ import {
 
 import history from './history'
 import theme from './theme'
+import {
+  JoinRoom,
+} from './components'
 
 class Routes extends React.Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
         <Router history={history}>
-          <div>LOADED</div>
+          <Switch>
+            <Route path="/join" component={JoinRoom} />
+          </Switch>
         </Router>
       </ThemeProvider>
     )

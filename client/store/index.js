@@ -9,6 +9,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import room from './room/room'
 import socket from './socket/socket'
+import socketSubscriptions from './socketSubscriptions'
 
 const reducer = combineReducers({
   room,
@@ -20,6 +21,7 @@ const middleware = composeWithDevTools(applyMiddleware(
   createLogger({ collapsed: true }),
 ))
 const store = createStore(reducer, middleware)
+socketSubscriptions(store)
 
 export default store
 export * from './room/room'
