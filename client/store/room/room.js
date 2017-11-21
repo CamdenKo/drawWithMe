@@ -1,3 +1,5 @@
+import history from '../../history'
+
 export const READ_ROOM = 'READ_ROOM'
 export const UPDATE_ROOM = 'UPDATE_ROOM'
 export const DELETE_ROOM = 'DELETE_ROOM'
@@ -11,6 +13,7 @@ export const errorRoom = err => ({ type: ERROR_ROOM, err })
 export const requestCreateRoom = socket =>
   () => {
     socket.emit('requestCreateRoom')
+    history.push('/createdRoom')
   }
 
 export const requestJoinRoom = (socket, key) =>

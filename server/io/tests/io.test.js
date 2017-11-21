@@ -33,8 +33,8 @@ describe('io', () => {
     const client1 = io.connect(socketURL)
     client1.on('connect', () => {
       client1.emit('requestJoinRoom', { key: '123456' })
-      client1.on('errorJoinRoom', ({ error }) => {
-        expect(error).toBeTruthy()
+      client1.on('errorJoinRoom', ({ err }) => {
+        expect(err).toBeTruthy()
         done()
       })
     })
@@ -54,6 +54,5 @@ describe('io', () => {
         })
       })
     })
-    randomStub.close()
   })
 })

@@ -1,5 +1,5 @@
 const socketio = require('socket.io')
-const chance = require('chance')
+const chance = require('chance')()
 
 const {
   generateUniqueKey,
@@ -17,15 +17,17 @@ const setupIO = (server) => {
       const key = generateUniqueKey()
       socket.join(key)
       if (!rooms[key]) {
-        rooms[key] = {}
+        const newRoom = {
+          key,
+          users: {
+            [socket.id]: chance.name(),
+          },
+        }
+        rooms[key] = newRoom
+      } else {
+        rooms[key].users[socket.id] = chance.name()
       }
-      rooms[key][socket.id] = {}
-      socket.emit('successfulCreateRoom', {
-        key,
-        users: {
-          [socket.id]: chance.name(),
-        },
-      })
+      socket.emit('successfulCreateRoom', rooms[key])
     })
 
     socket.on('requestJoinRoom', ({ key }) => {
@@ -43,8 +45,8 @@ const setupIO = (server) => {
 
     socket.on('disconnect', ({ key }) => { // TODO: key isn't passed in
       if (rooms[key]) {
-        delete rooms[key][socket.id]
-        if (!Object.keys(rooms[key]).length) {
+        delete rooms[key].users[socket.id]
+        if (!Object.keys(rooms[key].users).length) {
           removeKey(key)
         }
       }
