@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import {
+  requestJoinRoom,
+} from '../../store'
+import {
   BigHeader,
   Button,
   SpecialTextInput,
@@ -60,4 +63,11 @@ export class JoinRoom extends React.Component {
   }
 }
 
+const mapState = state => ({
+  room: state.room,
+})
+
+const mapDispatch = dispatch => ({
+  requestJoinRoom: key => requestJoinRoom(soc)
+})
 export default connect()(JoinRoom)

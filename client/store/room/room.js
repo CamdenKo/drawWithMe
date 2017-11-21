@@ -8,27 +8,6 @@ export const updateRoom = room => ({ type: UPDATE_ROOM, room })
 export const deleteRoom = () => ({ type: DELETE_ROOM })
 export const errorRoom = err => ({ type: ERROR_ROOM, err })
 
-export const successJoinRoom = socket =>
-  (dispatch) => {
-    socket.on('successJoinRoom', ({ room }) => {
-      dispatch(readRoom(room))
-    })
-  }
-
-export const errorJoinRoom = socket =>
-  (dispatch) => {
-    socket.on('errorJoinRoom', ({ err }) => {
-      dispatch(errorRoom(err))
-    })
-  }
-
-export const successCreateRoom = socket =>
-  (dispatch) => {
-    socket.on('successCreateRoom', ({ room }) => {
-      dispatch(readRoom(room))
-    })
-  }
-
 export const requestCreateRoom = socket =>
   () => {
     socket.emit('requestCreateRoom')
