@@ -24,9 +24,9 @@ const setupIO = (server) => {
     socket.on('requestJoinRoom', ({ key }) => {
       if (rooms[key]) {
         rooms[key][socket.id] = {}
-        socket.emit('successJoinRoom', { msg: 'success' })
+        socket.emit('successJoinRoom', { msg: 'success', room: {} })
       } else {
-        socket.emit('errorJoinRoom', { error: 'Room doesn\'t exist' })
+        socket.emit('errorJoinRoom', { err: 'Room doesn\'t exist' })
       }
     })
 
