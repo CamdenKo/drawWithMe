@@ -8,6 +8,7 @@ const {
 
 const rooms = {}
 const userKey = {}
+const parentKey = {}
 
 const setupIO = (server) => {
   const io = socketio(server)
@@ -19,12 +20,10 @@ const setupIO = (server) => {
       socket.join(key)
       const newRoom = {
         key,
-        users: {
-          [socket.id]: chance.name(),
-        },
+        parent: socket.id,
       }
       rooms[key] = newRoom
-      userKey[socket.id] = key
+      parentKey[socket.id] = key
       socket.emit('successCreateRoom', rooms[key])
     })
 
@@ -45,14 +44,23 @@ const setupIO = (server) => {
 
     socket.on('disconnect', () => {
       const key = userKey[socket.id]
-      delete userKey[socket.id]
-      if (rooms[key]) {
-        delete rooms[key].users[socket.id]
-        if (!Object.keys(rooms[key].users).length) {
-          removeKey(key)
+      if (key) {
+        delete userKey[socket.id]
+        if (rooms[key]) {
+          delete rooms[key].users[socket.id]
+          if (!Object.keys(rooms[key].users).length) {
+            removeKey(key)
+          }
         }
+        socket.broadcast.emit('updateRoom', { room: rooms[key] })
+      } else {
+        const innerKey = parentKey[socket.id]
+        Object.keys(rooms[innerKey].users).forEach((user) => {
+          delete userKey[user]
+        })
+        removeKey(key)
+        socket.broadcast.emit('deleteRoom')
       }
-      socket.broadcast.emit('updateRoom', { room: rooms[key] })
     })
   })
 }

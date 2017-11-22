@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { readSocket, readRoom, errorRoom, updateRoom } from './index'
+import { readSocket, readRoom, errorRoom, updateRoom, deleteRoom } from './index'
 const sock = io()
 
 export default ({ dispatch }) => {
@@ -15,5 +15,8 @@ export default ({ dispatch }) => {
   })
   sock.on('updateRoom', ({ room }) => {
     dispatch(updateRoom(room))
+  })
+  sock.on('deleteRoom', () => {
+    dispatch(deleteRoom())
   })
 }
