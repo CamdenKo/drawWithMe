@@ -1,5 +1,4 @@
 const socketio = require('socket.io')
-const chance = require('chance')()
 
 const {
   generateUniqueKey,
@@ -21,15 +20,17 @@ const setupIO = (server) => {
       const newRoom = {
         key,
         parent: socket.id,
+        users: {},
       }
       rooms[key] = newRoom
       parentKey[socket.id] = key
+      console.log('connect', rooms[key])
       socket.emit('successCreateRoom', rooms[key])
     })
 
     socket.on('requestJoinRoom', ({ key }) => {
       if (rooms[key]) {
-        rooms[key].users[socket.id] = chance.name()
+        rooms[key].users[socket.id] = 'Getting ready...'
         userKey[socket.id] = key
         socket.emit('successJoinRoom', { room: rooms[key] })
         socket.broadcast.emit('updateRoom', { room: rooms[key] })
@@ -39,22 +40,31 @@ const setupIO = (server) => {
     })
 
     socket.on('requestSetName', ({ key }) => {
+    })
 
+    socket.on('requestChangeName', ({ name }) => {
+      const key = userKey[socket.id]
+      const nameExists = Object.values(rooms[key].users)
+        .some(existingName => existingName === name)
+      if (nameExists) {
+        socket.emit('errorChangeName')
+      } else {
+        rooms[key].users[socket.id] = name
+        io.in(userKey[socket.id]).emit('updateRoom', { room: rooms[key] })
+        socket.emit('successChangeName')
+      }
     })
 
     socket.on('disconnect', () => {
       const key = userKey[socket.id]
+      const innerKey = parentKey[socket.id]
       if (key) {
         delete userKey[socket.id]
         if (rooms[key]) {
           delete rooms[key].users[socket.id]
-          if (!Object.keys(rooms[key].users).length) {
-            removeKey(key)
-          }
         }
         socket.broadcast.emit('updateRoom', { room: rooms[key] })
-      } else {
-        const innerKey = parentKey[socket.id]
+      } else if (innerKey) {
         Object.keys(rooms[innerKey].users).forEach((user) => {
           delete userKey[user]
         })

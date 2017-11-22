@@ -32,7 +32,6 @@ export class CreatedRoom extends React.Component {
   }
 
   render() {
-    console.log('update', this.props.room.users)
     return (
       <Parent>
         <BigHeader>Created Room</BigHeader>
@@ -41,10 +40,9 @@ export class CreatedRoom extends React.Component {
           <AccentBigHeader>{this.props.room.key}</AccentBigHeader>
         </KeyWrapper>
         {
-          Object.values(this.props.room.users).map(user => <SmallHeader>{user}</SmallHeader>)
-        }
-        {
-          console.log(Object.values(this.props.room.users))
+          Object.keys(this.props.room.users).map(user => (
+            <SmallHeader key={user}>{this.props.room.users[user]}</SmallHeader>
+          ))
         }
       </Parent>
     )
