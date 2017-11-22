@@ -13,10 +13,11 @@ export const errorRoom = err => ({ type: ERROR_ROOM, err })
 export const requestCreateRoom = socket =>
   () => {
     socket.emit('requestCreateRoom')
-    history.push('/createdRoom')
   }
 
-const defaultState = {}
+const defaultState = {
+  users: {},
+}
 
 export default (state = defaultState, action) => {
   switch (action.type) {

@@ -7,7 +7,7 @@ const {
 } = require('./room.util')
 
 const rooms = {}
-const userRoom = {}
+const userKey = {}
 
 const setupIO = (server) => {
   const io = socketio(server)
@@ -24,13 +24,14 @@ const setupIO = (server) => {
         },
       }
       rooms[key] = newRoom
-      userRoom[socket.id] = Object.keys(socket.rooms)[0]
+      userKey[socket.id] = key
       socket.emit('successCreateRoom', rooms[key])
     })
 
     socket.on('requestJoinRoom', ({ key }) => {
       if (rooms[key]) {
         rooms[key].users[socket.id] = chance.name()
+        userKey[socket.id] = key
         socket.emit('successJoinRoom', { room: rooms[key] })
         socket.broadcast.emit('updateRoom', { room: rooms[key] })
       } else {
@@ -43,8 +44,8 @@ const setupIO = (server) => {
     })
 
     socket.on('disconnect', () => {
-      const key = userRoom[socket.id]
-      delete userRoom[socket.id]
+      const key = userKey[socket.id]
+      delete userKey[socket.id]
       if (rooms[key]) {
         delete rooms[key].users[socket.id]
         if (!Object.keys(rooms[key].users).length) {
