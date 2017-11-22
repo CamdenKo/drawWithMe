@@ -7,6 +7,7 @@ const {
 } = require('./room.util')
 
 const rooms = {}
+const userRoom = {}
 
 const setupIO = (server) => {
   const io = socketio(server)
@@ -16,24 +17,22 @@ const setupIO = (server) => {
     socket.on('requestCreateRoom', () => {
       const key = generateUniqueKey()
       socket.join(key)
-      if (!rooms[key]) {
-        const newRoom = {
-          key,
-          users: {
-            [socket.id]: chance.name(),
-          },
-        }
-        rooms[key] = newRoom
-      } else {
-        rooms[key].users[socket.id] = chance.name()
+      const newRoom = {
+        key,
+        users: {
+          [socket.id]: chance.name(),
+        },
       }
-      socket.emit('successfulCreateRoom', rooms[key])
+      rooms[key] = newRoom
+      userRoom[socket.id] = Object.keys(socket.rooms)[0]
+      socket.emit('successCreateRoom', rooms[key])
     })
 
     socket.on('requestJoinRoom', ({ key }) => {
       if (rooms[key]) {
-        rooms[key][socket.id] = {}
-        socket.emit('successJoinRoom', { msg: 'success', room: {} })
+        rooms[key].users[socket.id] = chance.name()
+        socket.emit('successJoinRoom', { room: rooms[key] })
+        socket.broadcast.emit('updateRoom', { room: rooms[key] })
       } else {
         socket.emit('errorJoinRoom', { err: 'Room doesn\'t exist' })
       }
@@ -43,13 +42,16 @@ const setupIO = (server) => {
 
     })
 
-    socket.on('disconnect', ({ key }) => { // TODO: key isn't passed in
+    socket.on('disconnect', () => {
+      const key = userRoom[socket.id]
+      delete userRoom[socket.id]
       if (rooms[key]) {
         delete rooms[key].users[socket.id]
         if (!Object.keys(rooms[key].users).length) {
           removeKey(key)
         }
       }
+      socket.broadcast.emit('updateRoom', { room: rooms[key] })
     })
   })
 }

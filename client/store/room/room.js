@@ -16,10 +16,6 @@ export const requestCreateRoom = socket =>
     history.push('/createdRoom')
   }
 
-export const requestJoinRoom = (socket, key) =>
-  () => {
-    socket.emit('requestJoinRoom', { key })
-  }
 const defaultState = {}
 
 export default (state = defaultState, action) => {

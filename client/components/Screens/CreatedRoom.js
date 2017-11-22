@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
+import{
+  requestCreateRoom,
+} from '../../store'
 import {
   BigHeader,
   SmallHeader,
@@ -23,18 +26,31 @@ const KeyWrapper = styled.div`
   text-align: center;
 `
 
-export const CreatedRoom = props => (
-  <Parent>
-    <BigHeader>Created Room</BigHeader>
-    <KeyWrapper>
-      <SmallHeader>Generated key:</SmallHeader>
-      <AccentBigHeader>{props.room.key}</AccentBigHeader>
-    </KeyWrapper>
-  </Parent>
-)
+export class CreatedRoom extends React.Component {
+  componentDidMount() {
+    this.props.requestCreateRoom(this.props.socket)
+  }
+
+  render() {
+    return (
+      <Parent>
+        <BigHeader>Created Room</BigHeader>
+        <KeyWrapper>
+          <SmallHeader>Generated key:</SmallHeader>
+          <AccentBigHeader>{this.props.room.key}</AccentBigHeader>
+        </KeyWrapper>
+      </Parent>
+    )
+  }
+}
 
 const mapState = state => ({
   room: state.room,
+  socket: state.socket,
 })
 
-export default connect(mapState)(CreatedRoom)
+const mapDispatch = dispatch => ({
+  requestCreateRoom: socket => dispatch(requestCreateRoom(socket)),
+})
+
+export default connect(mapState, mapDispatch)(CreatedRoom)

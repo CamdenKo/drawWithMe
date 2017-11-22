@@ -3,9 +3,6 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 import {
-  requestJoinRoom,
-} from '../../store'
-import {
   BigHeader,
   Button,
   SpecialTextInput,
@@ -35,7 +32,7 @@ export class JoinRoom extends React.Component {
   }
 
   onChangeText(e) {
-    this.setState({ inputValue: e.target.value })
+    this.setState({ inputValue: e.target.value.toUpperCase() })
   }
 
   render() {
@@ -58,7 +55,7 @@ export class JoinRoom extends React.Component {
           <ColoredSmallHeader>Room Key</ColoredSmallHeader>
         </InputWrapper>
         <Button
-          onClick={() => this.props.requestJoinRoom(this.props.socket, this.state.inputValue)}
+          onClick={() => this.props.socket.emit('requestJoinRoom', { key: this.state.inputValue })}
         >
           Enter
         </Button>
@@ -72,7 +69,4 @@ const mapState = state => ({
   socket: state.socket,
 })
 
-const mapDispatch = dispatch => ({
-  requestJoinRoom: (socket, key) => dispatch(requestJoinRoom(socket, key)),
-})
-export default connect(mapState, mapDispatch)(JoinRoom)
+export default connect(mapState)(JoinRoom)

@@ -11,8 +11,11 @@ import {
 
 export const Home = props => (
   <div>
-    <Button onClick={() => props.history.push('/')}>Join</Button>
-    <Button onClick={() => props.requestCreateRoom(props.socket)}>Create</Button>
+    {
+      console.log(props.history)
+    }
+    <Button onClick={() => props.history.push('/join')}>Join</Button>
+    <Button onClick={() => props.history.push('/createdRoom')}>Create</Button>
   </div>
 )
 

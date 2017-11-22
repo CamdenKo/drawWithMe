@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-import { readSocket, readRoom, errorRoom } from './index'
+import { readSocket, readRoom, errorRoom, updateRoom } from './index'
 const sock = io()
 
 export default ({ dispatch }) => {
@@ -10,7 +10,10 @@ export default ({ dispatch }) => {
   sock.on('errorJoinRoom', ({ err }) => {
     dispatch(errorRoom(err))
   })
-  sock.on('successCreateRoom', ({ room }) => {
+  sock.on('successCreateRoom', (room) => {
     dispatch(readRoom(room))
+  })
+  sock.on('updateRoom', ({ room }) => {
+    dispatch(updateRoom(room))
   })
 }
