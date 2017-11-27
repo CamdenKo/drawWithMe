@@ -8,4 +8,5 @@ export default styled.h3`
   font-size: 2.7rem;
   text-align: center;
   margin: 10px 0;
+  padding: 10px 0;
 `
