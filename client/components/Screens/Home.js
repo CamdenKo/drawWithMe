@@ -11,9 +11,6 @@ import {
 
 export const Home = props => (
   <div>
-    {
-      console.log(props.history)
-    }
     <Button onClick={() => props.history.push('/join')}>Join</Button>
     <Button onClick={() => props.history.push('/createdRoom')}>Create</Button>
   </div>
