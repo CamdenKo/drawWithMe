@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import {
+  Redirect,
+} from 'react-router-dom'
 
 import {
   BigHeader,
@@ -29,8 +32,14 @@ export class JoinedRoom extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.socket.emit('requestJoinRoom', { key: this.props.match.params.roomId })
+  }
+
   render() {
-    return (
+    return this.props.room.error ? (
+      <Redirect to="/join" />
+    ) : (
       <Parent>
         <BigHeader>Room Joined</BigHeader>
         {
@@ -44,7 +53,7 @@ export class JoinedRoom extends React.Component {
               />
               <Button
                 disabled={!!this.state.nameInput.length}
-                onClick={this.props.requestChangeName(this.props.socket, this.state.nameInput)}
+                onClick={() => this.props.requestChangeName(this.props.socket, this.state.nameInput)}
               >
                 Change
               </Button>

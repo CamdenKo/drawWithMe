@@ -24,23 +24,34 @@ export const requestChangeName = (socket, name) =>
     socket.emit('requestChangeName', { name })
   }
 
+export const successJoinRoom = room =>
+  (dispatch) => {
+    dispatch(readRoom(room))
+    history.push(`/room/${room.key}`)
+  }
+
 const defaultState = {
   users: {},
   nameChanged: '',
+  error: false,
 }
+
+const noError = { error: true }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case READ_ROOM:
-      return Object.assign({}, state, action.room)
+      return Object.assign({}, state, action.room, noError)
     case UPDATE_ROOM:
-      return Object.assign({}, state, action.room)
+      return Object.assign({}, state, action.room, noError)
     case DELETE_ROOM:
       return defaultState
+    case ERROR_ROOM:
+      return Object.assign({}, state, { error: true })
     case CHANGE_NAME:
-      return Object.assign({}, state, { nameChanged: 'success' })
+      return Object.assign({}, state, { nameChanged: 'success' }, noError)
     case CHANGE_NAME_ERROR:
-      return Object.assign({}, state, { nameChanged: 'error' })
+      return Object.assign({}, state, { nameChanged: 'error' }, noError)
     default:
       return state
   }

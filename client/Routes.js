@@ -10,6 +10,7 @@ import history from './history'
 import theme from './theme'
 import {
   JoinRoom,
+  JoinedRoom,
   Home,
   CreatedRoom,
 } from './components'
@@ -22,6 +23,7 @@ class Routes extends React.Component {
           <Switch>
             <Route path="/join" component={JoinRoom} />
             <Route path="/createdRoom" component={CreatedRoom} />
+            <Route path="/room/:roomId" component={JoinedRoom} />
             <Route path="/" component={Home} />
           </Switch>
         </Router>
