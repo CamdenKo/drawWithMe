@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { configure, addDecorator } from '@storybook/react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router'
