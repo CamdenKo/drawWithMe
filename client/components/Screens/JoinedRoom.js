@@ -37,7 +37,7 @@ export class JoinedRoom extends React.Component {
   }
 
   render() {
-    return this.props.room.error ? (
+    return this.props.room && this.props.room.error ? (
       <Redirect to="/join" />
     ) : (
       <Parent>

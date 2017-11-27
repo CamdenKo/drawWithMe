@@ -9,7 +9,7 @@ import {
 import { Home } from './Home';
 import { JoinedRoom } from './JoinedRoom'
 
-store.dispatch(readRoom({ key: 123456 }))
+store.dispatch(readRoom({ key: 123456, error: 'none', users: { 123333: 'sam' } }))
 storiesOf('Screens', module)
   .add('JoinRoom', () => <JoinRoom />)
   .add('CreatedRoom', () => <CreatedRoom />)

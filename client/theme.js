@@ -1,7 +1,7 @@
 export default {
   typography: {
     header: 'Montserrat, sans-serif',
-    body: 'Cardo, serif',
+    body: 'Hind, sans-serif',
   },
   colors: {
     dark: '#6C567B',
