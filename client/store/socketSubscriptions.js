@@ -1,11 +1,11 @@
 import io from 'socket.io-client'
-import { readSocket, readRoom, errorRoom, updateRoom, deleteRoom, changeName, changeNameError, successJoinRoom } from './index'
+import { readSocket, readRoom, errorRoom, updateRoom, deleteRoom, changeName, changeNameError } from './index'
 const sock = io()
 
 export default ({ dispatch }) => {
   dispatch(readSocket(sock))
   sock.on('successJoinRoom', ({ room }) => {
-    dispatch(successJoinRoom(room))
+    dispatch(readRoom(room))
   })
   sock.on('errorJoinRoom', ({ err }) => {
     dispatch(errorRoom(err))

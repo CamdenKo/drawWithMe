@@ -14,6 +14,7 @@ import {
 } from '../../components'
 import {
   requestChangeName,
+  requestJoinRoom,
 } from '../../store'
 
 const Parent = styled.main`
@@ -33,13 +34,15 @@ export class JoinedRoom extends React.Component {
   }
 
   componentDidMount() {
-    this.props.socket.emit('requestJoinRoom', { key: this.props.match.params.roomId })
+    console.log('error', this.props.room.error, this.props.match.params.roomId)
+    this.props.requestJoinRoom(this.props.socket)
   }
 
   render() {
-    return this.props.room && this.props.room.error ? (
-      <Redirect to="/join" />
-    ) : (
+    if (!this.props.room.loading && this.props.room.error) {
+      return <Redirect to="/room" />
+    }
+    return (
       <Parent>
         <BigHeader>Room Joined</BigHeader>
         {
@@ -82,8 +85,9 @@ const mapState = state => ({
   socket: state.socket,
 })
 
-const mapDisaptch = dispatch => ({
+const mapDisaptch = (dispatch, ownProps) => ({
   requestChangeName: (socket, name) => dispatch(requestChangeName(socket, name)),
+  requestJoinRoom: socket => dispatch(requestJoinRoom(socket, ownProps.match.params.roomId)),
 })
 
 export default connect(mapState, mapDisaptch)(JoinedRoom)
