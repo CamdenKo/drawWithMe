@@ -8,11 +8,16 @@
 
 module.exports = {
   plugins: [
-    // your custom plugins
+    // your custom pluginsform
   ],
   module: {
     rules: [
-      // add your custom rules.
+      {
+        test: /\.css$/,
+        use: [
+          'css-loader',
+        ],
+      },
     ],
   },
 };

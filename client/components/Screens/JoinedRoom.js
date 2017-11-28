@@ -34,7 +34,6 @@ export class JoinedRoom extends React.Component {
   }
 
   componentDidMount() {
-    console.log('error', this.props.room.error, this.props.match.params.roomId)
     this.props.requestJoinRoom(this.props.socket)
   }
 
