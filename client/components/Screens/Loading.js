@@ -16,7 +16,7 @@ export default () => (
   <Parent>
     <BounceLoader
       loading
-      size="200"
+      size={200}
       color={theme.colors.darkAccent}
     />
   </Parent>

@@ -10,6 +10,7 @@ import {
   TextInput,
   Button,
   SmallHeader,
+  Loading,
   BodyText,
 } from '../../components'
 import {
@@ -38,6 +39,9 @@ export class JoinedRoom extends React.Component {
   }
 
   render() {
+    if (this.props.room.loading) {
+      return <Loading />
+    }
     if (!this.props.room.loading && this.props.room.error) {
       return <Redirect to="/room" />
     }
