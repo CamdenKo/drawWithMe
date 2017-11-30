@@ -32,34 +32,28 @@ export const requestJoinRoom = (socket, key) =>
 
 const defaultState = {
   users: {},
-  nameChangedError: '',
-  error: false,
   loading: false,
 }
 
-const error = { error: true }
-const noError = { error: false }
 const loading = { loading: true }
 const notLoading = { loading: false }
-const nameChangedSuccess = { nameChanged: 'success' }
-const nameChangedError = { nameChanged: 'error' }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case READ_ROOM:
-      return Object.assign({}, state, action.room, noError, notLoading)
+      return Object.assign({}, state, action.room, notLoading)
     case UPDATE_ROOM:
-      return Object.assign({}, state, action.room, noError, notLoading)
+      return Object.assign({}, state, action.room, notLoading)
     case DELETE_ROOM:
       return defaultState
     case ERROR_ROOM:
-      return Object.assign({}, state, error, notLoading)
+      return Object.assign({}, state, notLoading)
     case CHANGE_NAME:
-      return Object.assign({}, state, nameChangedSuccess, noError, notLoading)
+      return Object.assign({}, state, notLoading)
     case CHANGE_NAME_ERROR:
-      return Object.assign({}, state, nameChangedError, noError, notLoading)
+      return Object.assign({}, state, notLoading)
     case LOAD_ROOM:
-      return { ...state, loading }
+      return { ...state, ...loading }
     default:
       return state
   }
