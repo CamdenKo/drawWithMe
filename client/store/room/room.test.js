@@ -40,7 +40,7 @@ describe('room reducer', () => {
     expect(reducer(undefined, {
       type: READ_ROOM,
       room: fakeRoom1,
-    })).toEqual(fakeRoom1)
+    })).toEqual({ ...defaultState, ...fakeRoom1 })
   })
   it('should combine state when called with UPDATE_ROOM', () => {
     expect(reducer(fakeRoom1, {

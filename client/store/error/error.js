@@ -8,7 +8,7 @@ export const successRoom = () => ({ type: SUCCESS_ROOM })
 export const errorChangeName = () => ({ type: ERROR_CHANGE_NAME })
 export const successChangeName = () => ({ type: SUCCESS_CHANGE_NAME })
 
-const defaultState = {
+export const defaultState = {
   roomError: false,
   changeNameError: false,
 }
