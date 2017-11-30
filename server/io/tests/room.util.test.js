@@ -34,8 +34,8 @@ describe('room.util', () => {
     })
   })
   describe('generateUniqueKey', () => {
-    it('returns a string with length 4', () => {
-      expect(generateUniqueKey().length).toEqual(4)
+    it('returns a string with length 6', () => {
+      expect(generateUniqueKey().length).toEqual(6)
     })
   })
 })

@@ -1,4 +1,4 @@
-import reducer, { readRoom, READ_ROOM, updateRoom, UPDATE_ROOM, deleteRoom, DELETE_ROOM } from './room'
+import reducer, { readRoom, READ_ROOM, updateRoom, UPDATE_ROOM, deleteRoom, DELETE_ROOM, defaultState } from './room'
 
 describe('room actions', () => {
   const fakeRoom = {
@@ -34,7 +34,7 @@ describe('room reducer', () => {
   }
 
   it('should return state by default', () => {
-    expect(reducer(undefined, {})).toEqual({})
+    expect(reducer(undefined, {})).toEqual(defaultState)
   })
   it('should return room with READ_ROOM', () => {
     expect(reducer(undefined, {
@@ -51,6 +51,6 @@ describe('room reducer', () => {
   it('should return default state when called with DELETE_ROOM', () => {
     expect(reducer(fakeRoom1, {
       type: DELETE_ROOM,
-    })).toEqual({})
+    })).toEqual(defaultState)
   })
 })

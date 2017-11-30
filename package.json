@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server/index.js",
     "test": "jest",
+    "test-frontend": "jest --watch /client",
     "test-watch": "jest --watch",
     "build-client": "webpack",
     "build-client-watch": "webpack --watch",
