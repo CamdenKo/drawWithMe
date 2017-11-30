@@ -8,7 +8,7 @@ export const criticalLoadFinished = () => ({ type: CRITICAL_LOAD_FINISHED })
 export const load = () => ({ type: LOAD })
 export const loadFinished = () => ({ type: LOAD_FINISHED })
 
-const defaultState = {
+export const defaultState = {
   criticalLoading: false,
   loading: false,
 }
