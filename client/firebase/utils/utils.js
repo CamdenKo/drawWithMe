@@ -1,6 +1,7 @@
 import db, {
   defaultRoom,
 } from '../db'
+import possibleWords from './allWords'
 
 const approvedCharacters = 'abcdefghijklmnopqrstuvwxyz1234567890'
 
@@ -25,6 +26,21 @@ export const createRoom = async () => {
     [code]: defaultRoom,
   })
   return code
+}
+
+export const getWords = async (code) => {
+  const ref = await db.ref(`${code}`).once('value')
+  return Array.isArray(ref.val()) ?
+    ref.val() :
+    Object.values(ref.val())
+}
+
+export const generateWord = async (code, usedWords) => {
+  const word = pickOneRandomChar(possibleWords)
+  const wordsToAvoid = usedWords || await getWords(code)
+  return wordsToAvoid.includes(word) ?
+    generateWord(code, wordsToAvoid) :
+    word
 }
 
 export const deleteRoom = async code =>
