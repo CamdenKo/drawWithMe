@@ -33,7 +33,7 @@ export const joinRoom = code =>
     }
   }
 
-export const defaultState = {
+const defaultState = {
   code: '',
   err: null,
 }

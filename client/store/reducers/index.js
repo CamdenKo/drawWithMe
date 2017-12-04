@@ -11,3 +11,5 @@ const reducer = combineReducers({
 })
 
 export default reducer
+export * from './roomCode/roomCode'
+export * from './word/word'

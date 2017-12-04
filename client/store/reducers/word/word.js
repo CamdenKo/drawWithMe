@@ -38,7 +38,7 @@ export const unsubcribeToWords = () =>
     dispatch(unsubscribeWord())
   }
 
-export const defaultState = {
+const defaultState = {
   subscribed: null, // firebase database ref
   word: '',
 }
