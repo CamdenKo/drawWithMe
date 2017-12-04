@@ -2,12 +2,10 @@ import {
   combineReducers,
 } from 'redux'
 
-import room from './room/room'
-import socket from './socket/socket'
+import roomCode from './roomCode/roomCode'
 
 const reducer = combineReducers({
-  room,
-  socket,
+  roomCode,
 })
 
 export default reducer
