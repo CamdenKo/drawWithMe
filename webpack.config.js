@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
   entry: ['babel-polyfill', './client/index.js'],
   output: {
@@ -32,5 +34,10 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      ENV: JSON.stringify(env.ENV),
+    }),
+  ],
 };
 

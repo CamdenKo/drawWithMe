@@ -1,28 +1,19 @@
 import {
   createStore,
-  combineReducers,
   applyMiddleware,
+  compose,
 } from 'redux'
-import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
 
-import room from './room/room'
-import socket from './socket/socket'
-import socketSubscriptions from './socketSubscriptions'
+import reducer from './reducers'
 
-const reducer = combineReducers({
-  room,
-  socket,
-})
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = (ENV === 'dev' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ?
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
+/* eslint-enable */
 
-const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({ collapsed: true }),
-))
-const store = createStore(reducer, middleware)
-socketSubscriptions(store)
+const store = createStore(reducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
 
 export default store
-export * from './room/room'
-export * from './socket/socket'
+export * from './reducers/room/room'
+export * from './reducers/socket/socket'

@@ -8,10 +8,11 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "build-client": "webpack",
-    "build-client-watch": "webpack --watch",
-    "start-dev": "yarn build-client-watch & nodemon server/index.js",
+    "build-client-watch": "webpack --watch --env.ENV=dev",
+    "start-dev": "yarn build-client-watch & nodemon server/index.js & firebase serve",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "deploy": "webpack --env.ENV=production && firebase deploy"
   },
   "keywords": [],
   "author": "Camden <camdenko@gmail.com> (camdenko.github.io)",
