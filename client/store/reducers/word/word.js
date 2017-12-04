@@ -18,9 +18,9 @@ export const generateNewWord = () =>
 
 export const subscribeToWords = () =>
   (dispatch, getState) => {
-    if (getState().subscribed || !getState().roomCode.code) return
-    const code = getState().roomCode.code
-    const ref = db.ref(`${code}`)
+    if (getState().roomCode.subscribed || !getState().roomCode.roomCode) return
+    const code = getState().roomCode.roomCode
+    const ref = db.ref(`${code}/word`)
     ref.on('value', (snapshot) => {
       const words = snapshot.val()
       const newestWord = words[words.length - 1]
@@ -33,8 +33,8 @@ export const subscribeToWords = () =>
 
 export const unsubcribeToWords = () =>
   (dispatch, getState) => {
-    if (!getState().subscribed) return
-    getState().subscribed.off()
+    if (!getState().word.subscribed) return
+    getState().word.subscribed.off()
     dispatch(unsubscribeWord())
   }
 

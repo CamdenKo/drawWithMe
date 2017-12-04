@@ -34,16 +34,16 @@ export const joinRoom = code =>
   }
 
 const defaultState = {
-  code: '',
+  roomCode: '',
   err: null,
 }
 
 export default (state = defaultState, action) => {
   switch (action.type) {
     case READ_ROOM_CODE:
-      return { ...state, code: action.code, err: null }
+      return { ...state, roomCode: action.code, err: null }
     case DELETE_ROOM_CODE:
-      return { ...state, code: '', err: null }
+      return { ...state, roomCode: '', err: null }
     case ERROR_ROOM_CODE:
       return { ...state, err: action.err }
     default:
