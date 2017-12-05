@@ -1,3 +1,5 @@
+import db from '../../../firebase/db'
+
 const READ_CHATS = 'READ_CHATS'
 const READ_MESSAGE = 'READ_MESSAGE'
 const ERROR_MESSAGE = 'ERROR_MESSAGE'
@@ -31,6 +33,22 @@ export const countdownChats = seconds =>
       // eslint-disable-next-line no-await-in-loop
       await timeoutPromisifed(1000, () => dispatch(readMessage(countdownMessage(time))))
     }
+  }
+
+export const subscribeToMessages = () =>
+  (dispatch, getState) => {
+    const state = getState()
+    if (state.chat.subscribed) return
+    const code = state.roomCode.roomCode
+    const ref = db.ref(`${code}/messages`)
+    ref.on('value', (snapshot) => {
+      const messages = snapshot.val()
+      if (Array.isArray(messages)) {
+        dispatch(readChats(messages))
+      } else {
+        dispatch(readChats(Object.values(messages)))
+      }
+    })
   }
 
 const defaultState = {

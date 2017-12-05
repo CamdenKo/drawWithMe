@@ -39,7 +39,7 @@ export const subscribeToGuesses = () =>
       if (Array.isArray(guesses)) {
         dispatch(readGuesses(guesses))
       } else {
-        dispatch(readGuess(Object.values(guesses)))
+        dispatch(readGuesses(Object.values(guesses)))
       }
     })
     dispatch(subscribeGuesses(ref))
