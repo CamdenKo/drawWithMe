@@ -5,6 +5,7 @@ import { withRouter } from 'react-router'
 
 import {
   createRoom,
+  startGame,
   unloadHost,
 } from '../../store'
 import {
@@ -55,7 +56,7 @@ export class CreatedRoom extends React.Component {
   gameStart() {
     if (this.props.players.players.length > 1 && this.props.players.numLoading === 0) {
       return (
-        <Button>
+        <Button onClick={this.props.startGame}>
           Start Game
         </Button>
       )
@@ -105,6 +106,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   requestCreateRoom: () => dispatch(createRoom()),
   unloadHost: () => dispatch(unloadHost()),
+  startGame: () => dispatch(startGame()),
 })
 
 export default withRouter(connect(mapState, mapDispatch)(CreatedRoom))

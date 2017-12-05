@@ -1,5 +1,5 @@
 import { configure } from '@storybook/react';
-
+import 'babel-polyfill'
 function loadStories() {
   require('../stories');
 }
