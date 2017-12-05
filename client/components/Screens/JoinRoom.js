@@ -48,8 +48,6 @@ export class JoinRoom extends React.Component {
         color: lightgreen;
       ` :
       SmallHeader
-    console.log(this.props)
-    console.log(this.props.roomCode.err)
     return (
       <Parent>
         <BigHeader>Join Room</BigHeader>

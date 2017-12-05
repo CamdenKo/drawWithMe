@@ -18,8 +18,10 @@ export const errorRoomCode = err => ({ type: ERROR_ROOM_CODE, err })
 export const loadingRoomCode = () => ({ type: LOADING_ROOM_CODE })
 
 export const createRoom = () =>
-  async dispatch =>
+  async (dispatch) => {
     dispatch(readRoomCode(await firebaseCreateRoom()))
+    dispatch(subscribeToPlayers())
+  }
 
 export const deleteRoom = () =>
   async (dispatch, getState) => {

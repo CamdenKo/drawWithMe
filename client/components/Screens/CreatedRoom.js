@@ -11,6 +11,7 @@ import {
   PlayerList,
   BigHeader,
   SmallHeader,
+  Button,
 } from '../../components'
 
 const Parent = styled.main`
@@ -30,6 +31,11 @@ const KeyWrapper = styled.div`
 `
 
 export class CreatedRoom extends React.Component {
+  constructor() {
+    super()
+    this.gameStart = this.gameStart.bind(this)
+  }
+
   componentDidMount() {
     this.props.requestCreateRoom(this.props.socket)
     if (window.onbeforeunload !== undefined) {
@@ -46,6 +52,34 @@ export class CreatedRoom extends React.Component {
     this.props.unloadHost()
   }
 
+  gameStart() {
+    if (this.props.players.players.length > 1 && this.props.players.numLoading === 0) {
+      return (
+        <Button>
+          Start Game
+        </Button>
+      )
+    }
+    if (this.props.players.players.length < 2) {
+      return (
+        <React.Fragment>
+          <Button disabled>
+            Start Game
+          </Button>
+          <SmallHeader>Waiting for more players...</SmallHeader>
+        </React.Fragment>
+      )
+    }
+    return (
+      <React.Fragment>
+        <Button disabled>
+          Start Game
+        </Button>
+        <SmallHeader>Waiting for everyone to pick their name.</SmallHeader>
+      </React.Fragment>
+    )
+  }
+
   render() {
     return (
       <Parent>
@@ -54,6 +88,9 @@ export class CreatedRoom extends React.Component {
           <SmallHeader>Generated key:</SmallHeader>
           <AccentBigHeader>{this.props.roomCode.roomCode}</AccentBigHeader>
         </KeyWrapper>
+        {
+          this.gameStart()
+        }
         <PlayerList />
       </Parent>
     )
