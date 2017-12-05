@@ -14,12 +14,12 @@ import {
   SmallHeader,
   Loading,
   PlayerList,
-} from '../../components'
+} from '../../../components'
 import {
   setName,
   unload,
   joinRoom,
-} from '../../store'
+} from '../../../store'
 
 const Parent = styled.main`
   display: flex;
@@ -84,9 +84,6 @@ export class JoinedRoom extends React.Component {
             </div>
           )
         }
-              <Button onClick={this.props.unload}>
-                A
-              </Button>
         <PlayerList />
       </Parent>
     )

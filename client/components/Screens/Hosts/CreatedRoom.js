@@ -7,13 +7,13 @@ import {
   createRoom,
   startGame,
   unloadHost,
-} from '../../store'
+} from '../../../store'
 import {
   PlayerList,
   BigHeader,
   SmallHeader,
   Button,
-} from '../../components'
+} from '../../../components'
 
 const Parent = styled.main`
   display: flex;

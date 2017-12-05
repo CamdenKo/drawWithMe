@@ -6,9 +6,9 @@ import {
   JoinRoom,
   Loading,
   CreatedRoom,
+  JoinedRoom,
 } from '../Screens'
 import { Home } from './Home';
-import { JoinedRoom } from './JoinedRoom'
 
 store.dispatch(readRoom({ key: 123456, error: 'none', users: { 123333: 'sam' } }))
 
