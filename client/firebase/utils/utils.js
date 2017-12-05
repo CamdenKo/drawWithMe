@@ -46,3 +46,11 @@ export const generateWord = async (code, usedWords) => {
 export const deleteRoom = async code =>
   db.ref(`${code}`).set(null)
 
+export const validName = async (code, name) => {
+  const userObjs = await db.ref(`${code}/players`).once('value')
+  const notValid = Object.values(userObjs)
+    .map(obj => obj.name)
+    .some(usedName => name === usedName)
+  return !notValid
+}
+

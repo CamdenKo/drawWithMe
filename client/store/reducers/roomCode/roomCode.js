@@ -35,7 +35,7 @@ export const joinRoom = code =>
 
 const defaultState = {
   roomCode: '',
-  err: null,
+  err: '',
 }
 
 export default (state = defaultState, action) => {
