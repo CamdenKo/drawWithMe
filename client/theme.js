@@ -12,4 +12,12 @@ export default {
   widths: {
 
   },
+  drawingColors: [
+    'black',
+    'blue',
+    'red',
+    'green',
+    'orange',
+    'yellow',
+  ],
 }

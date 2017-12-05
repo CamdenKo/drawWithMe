@@ -6,4 +6,4 @@ import {
 } from '../Players'
 
 storiesOf('Molecules/Players', module)
-  .add(() => <PlayerList />)
+  .add('PlayerList', () => <PlayerList />)

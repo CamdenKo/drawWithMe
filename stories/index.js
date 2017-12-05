@@ -10,6 +10,8 @@ import theme from '../client/theme'
 
 const req = require.context('../client/components', true, /\.stories\.js$/)
 
+console.log(req.keys())
+
 const loadStories = () => req.keys().forEach(file => req(file))
 
 addDecorator(story => (
