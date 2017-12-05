@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
     "test": "jest",
     "test-w": "jest --watch",
     "build-client": "webpack",
     "build-client-watch": "webpack --watch --env.ENV=dev",
-    "start-dev": "yarn build-client-watch & nodemon server/index.js & firebase serve",
+    "start": "yarn build-client-watch & firebase serve",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy": "webpack --env.ENV=production && firebase deploy"

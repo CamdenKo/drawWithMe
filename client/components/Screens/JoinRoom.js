@@ -1,9 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import {
-  withRouter,
-} from 'react-router'
 
 import {
   BigHeader,
@@ -36,7 +33,7 @@ export class JoinRoom extends React.Component {
   }
 
   onChangeText(e) {
-    this.setState({ inputValue: e.target.value.toUpperCase() })
+    this.setState({ inputValue: e.target.value.toLowerCase() })
   }
 
   submit() {
@@ -51,15 +48,11 @@ export class JoinRoom extends React.Component {
         color: lightgreen;
       ` :
       SmallHeader
-
+      console.log(this.props)
+    console.log(this.props.roomCode.err)
     return (
       <Parent>
         <BigHeader>Join Room</BigHeader>
-        {
-          this.props.room.error && (
-            <SmallHeader>Please try again</SmallHeader>
-          )
-        }
         <InputWrapper>
           <SpecialTextInput
             size={this.maxSize + 2}
@@ -74,14 +67,16 @@ export class JoinRoom extends React.Component {
         >
           Enter
         </Button>
+        {
+          this.props.roomCode.err && <p>{this.props.roomCode.err}</p>
+        }
       </Parent>
     )
   }
 }
 
 const mapState = state => ({
-  room: state.room,
-  socket: state.socket,
+  roomCode: state.roomCode,
 })
 
-export default withRouter(connect(mapState)(JoinRoom))
+export default connect(mapState)(JoinRoom)

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import {
   Redirect,
+  withRouter,
 } from 'react-router-dom'
 
 import {
@@ -14,8 +15,8 @@ import {
   BodyText,
 } from '../../components'
 import {
-  requestChangeName,
-  requestJoinRoom,
+  setName,
+  joinRoom,
 } from '../../store'
 
 const Parent = styled.main`
@@ -35,15 +36,15 @@ export class JoinedRoom extends React.Component {
   }
 
   componentDidMount() {
-    this.props.requestJoinRoom(this.props.socket)
+    this.props.joinRoom()
   }
 
   render() {
-    if (this.props.room.loading) {
+    if (this.props.roomCode.loading) {
       return <Loading />
     }
-    if (!this.props.room.loading && this.props.room.error) {
-      return <Redirect to="/room" />
+    if (this.props.roomCode.err) {
+      return <Redirect to="/join" />
     }
     return (
       <Parent>
@@ -58,39 +59,33 @@ export class JoinedRoom extends React.Component {
                 value={this.state.nameInput}
               />
               <Button
-                disabled={!!this.state.nameInput.length}
-                onClick={() => this.props.requestChangeName(this.props.socket, this.state.nameInput)}
+                disabled={!this.state.nameInput.length}
+                onClick={() => this.props.setName(this.state.nameInput)}
               >
                 Change
               </Button>
             </div>
           )
         }
-        {
-          this.state.nameChanged === 'error' && (
-            <BodyText>Name is already taken, try again</BodyText>
-          )
-        }
         <SmallHeader>Players:</SmallHeader>
-        {
+        {/* {
           Object.keys(this.props.room.users).map(user => (
             <BodyText key={user}>{this.props.room.users[user]}</BodyText>
           ))
-        }
+        } */}
       </Parent>
     )
   }
 }
 
 const mapState = state => ({
-  room: state.room,
-  nameChanged: state.room.nameChanged,
-  socket: state.socket,
+  roomCode: state.roomCode,
 })
 
-const mapDisaptch = (dispatch, ownProps) => ({
-  requestChangeName: (socket, name) => dispatch(requestChangeName(socket, name)),
-  requestJoinRoom: socket => dispatch(requestJoinRoom(socket, ownProps.match.params.roomId)),
+const mapDispatch = (dispatch, ownProps) => ({
+  joinRoom: () => dispatch(joinRoom(ownProps.match.params.roomId.toLowerCase())),
+  setName: name => dispatch(setName(name)),
+  // setName: name => console.log(name),
 })
 
-export default connect(mapState, mapDisaptch)(JoinedRoom)
+export default withRouter(connect(mapState, mapDispatch)(JoinedRoom))

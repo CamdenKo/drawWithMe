@@ -6,6 +6,7 @@ const ERROR_MESSAGE = 'ERROR_MESSAGE'
 const CLEAR_CHAT = 'CLEAR_CHAT'
 const DISABLE_CHAT = 'DISABLE_CHAT'
 const ENABLE_CHAT = 'ENABLE_CHAT'
+const SUBSCRIBE_CHAT = 'SUBSCRIBE_CHAT'
 
 export const readChats = chat => ({ type: READ_CHATS, chat })
 export const readMessage = message => ({ type: READ_MESSAGE, message })
@@ -14,6 +15,7 @@ export const clearChat = () => ({ type: CLEAR_CHAT })
 export const enableChat = () => ({ type: ENABLE_CHAT })
 export const disableChat = () => ({ type: DISABLE_CHAT })
 export const rightGuessMessage = playerName => readMessage({ message: `${playerName} guessed the word correctly!` })
+export const subscribeChat = ref => ({ type: SUBSCRIBE_CHAT, ref })
 
 const timeoutPromisifed = (time, cb) =>
   new Promise((resolve) => {
@@ -48,6 +50,7 @@ export const subscribeToMessages = () =>
       } else {
         dispatch(readChats(Object.values(messages)))
       }
+      dispatch(subscribeChat(ref))
     })
   }
 
@@ -72,6 +75,8 @@ export default (state = defaultState, action) => {
       return { ...state, disabled: true }
     case ENABLE_CHAT:
       return { ...state, disabled: false }
+    case SUBSCRIBE_CHAT:
+      return { ...state, subscribed: action.ref }
     default:
       return state
   }

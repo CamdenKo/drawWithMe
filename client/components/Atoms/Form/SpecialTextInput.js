@@ -8,5 +8,4 @@ export default styled.input`
   padding: 0.5rem 0rem;
   font-family: ${({ theme }) => theme.typography.header};
   text-align: center;
-  text-transform: uppercase;
 `

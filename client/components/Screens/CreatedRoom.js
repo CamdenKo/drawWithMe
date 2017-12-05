@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
-import{
-  requestCreateRoom,
+import {
+  createRoom,
 } from '../../store'
 import {
   BigHeader,
@@ -37,12 +37,12 @@ export class CreatedRoom extends React.Component {
         <BigHeader>Created Room</BigHeader>
         <KeyWrapper>
           <SmallHeader>Generated key:</SmallHeader>
-          <AccentBigHeader>{this.props.room.key}</AccentBigHeader>
+          <AccentBigHeader>{this.props.roomCode.roomCode}</AccentBigHeader>
         </KeyWrapper>
         {
-          Object.keys(this.props.room.users).map(user => (
-            <SmallHeader key={user}>{this.props.room.users[user]}</SmallHeader>
-          ))
+          // Object.keys(this.props.room.users).map(user => (
+          //   <SmallHeader key={user}>{this.props.room.users[user]}</SmallHeader>
+          // ))
         }
       </Parent>
     )
@@ -50,12 +50,11 @@ export class CreatedRoom extends React.Component {
 }
 
 const mapState = state => ({
-  room: state.room,
-  socket: state.socket,
+  roomCode: state.roomCode,
 })
 
 const mapDispatch = dispatch => ({
-  requestCreateRoom: socket => dispatch(requestCreateRoom(socket)),
+  requestCreateRoom: () => dispatch(createRoom()),
 })
 
 export default connect(mapState, mapDispatch)(CreatedRoom)

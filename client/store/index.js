@@ -15,5 +15,4 @@ const composeEnhancers = (ENV === 'dev' && window.__REDUX_DEVTOOLS_EXTENSION_COM
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
 
 export default store
-export * from './reducers/room/room'
-export * from './reducers/socket/socket'
+export * from './reducers'

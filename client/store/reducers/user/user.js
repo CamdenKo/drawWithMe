@@ -18,26 +18,22 @@ const generateUserObj = name => ({
   points: 0,
 })
 
-export const generateNewUser = () =>
-  async (dispatch, getState) => {
-    const state = getState()
-    const ref = db.ref(`${state.roomCode.roomCode}/players/numLoading`)
-    const numLoading = await ref.once('value')
-    await ref.set(numLoading + 1)
-  }
-
 export const setName = name =>
   async (dispatch, getState) => {
-    const state = getState()
-    if (await validName(state.roomCode.roomCode, name)) {
-      const ref = db.ref(`${state.roomCode.roomCode}/players`)
-      const value = await ref.once('value')
-      const userObj = generateUserObj(name)
-      await ref.push(userObj)
-      await db.ref(`${state.roomCode.roomCode}/players/numLoading`).set(value.numLoading - 1)
-      dispatch(readUser(userObj))
-    } else {
-      dispatch(errorUser(`${name} is already taken. Try another one?`))
+    try {
+      const state = getState()
+      if (await validName(state.roomCode.roomCode, name)) {
+        const ref = db.ref(`${state.roomCode.roomCode}/players`)
+        const value = await ref.once('value')
+        const userObj = generateUserObj(name)
+        await ref.push(userObj)
+        await db.ref(`${state.roomCode.roomCode}/players/numLoading`).set(value.numLoading - 1)
+        dispatch(readUser(userObj))
+      } else {
+        dispatch(errorUser(`${name} is already taken. Try another one?`))
+      }
+    } catch (err) {
+      console.error(err)
     }
   }
 

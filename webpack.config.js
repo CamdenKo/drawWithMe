@@ -36,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      ENV: JSON.stringify(env.ENV),
+      ENV: JSON.stringify(process.env.ENV),
     }),
   ],
 };
