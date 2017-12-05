@@ -48,9 +48,14 @@ export const deleteRoom = async code =>
 
 export const validName = async (code, name) => {
   const userObjs = await db.ref(`${code}/players`).once('value')
-  const notValid = Object.values(userObjs)
+  const notValid = Object.values(userObjs.val())
     .map(obj => obj.name)
     .some(usedName => name === usedName)
   return !notValid
 }
 
+export const gameReady = async (code) => {
+  const numLoading = (await db.ref(`${code}/numLoading`).once('value')).val()
+  const numPlayers = (await db.ref(`${code}/players`).once('value')).val()
+  return numLoading !== 0 && numPlayers > 0
+}

@@ -23,7 +23,7 @@ export const createRoom = () =>
 
 export const deleteRoom = () =>
   async (dispatch, getState) => {
-    await firebaseDeleteRoom(getState().roomCode)
+    await firebaseDeleteRoom(getState().roomCode.roomCode)
     dispatch(deleteRoomCode())
   }
 
@@ -43,6 +43,33 @@ export const joinRoom = code =>
       dispatch(subscribeToPlayers())
     } else {
       dispatch(errorRoomCode(`Doesn't seem to be a room at ${code}. Try again?`))
+    }
+  }
+
+export const unloadHost = () =>
+  async (dispatch, getState) => {
+    dispatch(deleteRoom())
+  }
+
+export const unload = () =>
+  async (dispatch, getState) => {
+    const state = getState()
+    if (!state.roomCode.roomCode) return
+    const code = state.roomCode.roomCode
+    if (!state.user.nameSet) {
+      const ref = db.ref(`${code}/numLoading`)
+      const numLoading = (await ref.once('value')).val()
+      await ref.set(numLoading - 1)
+    } else {
+      const ref = db.ref(`${code}/players`)
+      const name = state.user.user.name
+      if (Object.keys((await ref.once('value')).val()).length === 1) {
+        await ref.set(false)
+      } else {
+        ref.orderByChild('name').equalTo(name).on('child_added', async (snapshot) => {
+          await db.ref(`${code}/players/${snapshot.key}`).set(null)
+        })
+      }
     }
   }
 

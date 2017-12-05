@@ -5,9 +5,9 @@ initializeFirebase()
 export default firebase.database()
 
 export const defaultRoom = {
-  drawing: [],
+  drawing: false,
   judge: '',
-  players: {},
+  players: false,
   started: false,
   word: '',
 }

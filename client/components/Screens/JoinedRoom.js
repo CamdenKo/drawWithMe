@@ -10,12 +10,14 @@ import {
   BigHeader,
   TextInput,
   Button,
+  ErrorText,
   SmallHeader,
   Loading,
-  BodyText,
+  PlayerList,
 } from '../../components'
 import {
   setName,
+  unload,
   joinRoom,
 } from '../../store'
 
@@ -37,6 +39,18 @@ export class JoinedRoom extends React.Component {
 
   componentDidMount() {
     this.props.joinRoom()
+    if (window.onbeforeunload !== undefined) {
+      window.onbeforeunload = () => {
+        this.props.unload()
+        return undefined
+      }
+    } else if (window.onpagehide !== undefined) {
+      window.onpagehide = this.props.unload
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.unload()
   }
 
   render() {
@@ -50,7 +64,7 @@ export class JoinedRoom extends React.Component {
       <Parent>
         <BigHeader>Room Joined {this.props.roomCode.roomCode}</BigHeader>
         {
-          this.state.nameChanged !== 'success' && (
+          !this.props.user.nameSet && (
             <div>
               <SmallHeader>Set Name</SmallHeader>
               <TextInput
@@ -64,15 +78,16 @@ export class JoinedRoom extends React.Component {
               >
                 Change
               </Button>
+              {
+                this.props.user.err && <ErrorText>{this.props.user.err}</ErrorText>
+              }
             </div>
           )
         }
-        <SmallHeader>Players:</SmallHeader>
-        {/* {
-          Object.keys(this.props.room.users).map(user => (
-            <BodyText key={user}>{this.props.room.users[user]}</BodyText>
-          ))
-        } */}
+              <Button onClick={this.props.unload}>
+                A
+              </Button>
+        <PlayerList />
       </Parent>
     )
   }
@@ -81,11 +96,13 @@ export class JoinedRoom extends React.Component {
 const mapState = state => ({
   roomCode: state.roomCode,
   players: state.players,
+  user: state.user,
 })
 
 const mapDispatch = (dispatch, ownProps) => ({
   joinRoom: () => dispatch(joinRoom(ownProps.match.params.roomId.toLowerCase())),
   setName: name => dispatch(setName(name)),
+  unload: () => dispatch(unload()),
 })
 
 export default withRouter(connect(mapState, mapDispatch)(JoinedRoom))

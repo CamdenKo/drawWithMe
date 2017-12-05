@@ -23,6 +23,7 @@ class Routes extends React.Component {
           <Switch>
             <Route path="/join" component={JoinRoom} />
             <Route path="/createdRoom" component={CreatedRoom} />
+            <Route path="/createdRoom/:roomId" component={CreatedRoom} />
             <Route path="/room/:roomId" component={JoinedRoom} />
             <Route path="/" component={Home} />
           </Switch>
