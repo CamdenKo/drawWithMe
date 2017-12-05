@@ -1,9 +1,11 @@
 import db from '../../../firebase/db'
-
 import {
   createRoom as firebaseCreateRoom,
   deleteRoom as firebaseDeleteRoom,
 } from '../../../firebase/utils/utils'
+import {
+  subscribeToPlayers,
+} from '../../../store'
 
 const READ_ROOM_CODE = 'READ_ROOM_CODE'
 const DELETE_ROOM_CODE = 'DELETE_ROOM_CODE'
@@ -31,13 +33,14 @@ export const joinRoom = code =>
     const ref = await db.ref(`${code}`).once('value')
     if (ref.val()) {
       dispatch(readRoomCode(code))
-      const numLoadingRef = db.ref(`${code}/players/numLoading`)
+      const numLoadingRef = db.ref(`${code}/numLoading`)
       const numLoading = await numLoadingRef.once('value')
       if (numLoading.val() === null) {
         await numLoadingRef.set(1)
       } else {
         await numLoadingRef.set(numLoading.val() + 1)
       }
+      dispatch(subscribeToPlayers())
     } else {
       dispatch(errorRoomCode(`Doesn't seem to be a room at ${code}. Try again?`))
     }

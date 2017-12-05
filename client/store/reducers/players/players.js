@@ -16,7 +16,9 @@ export const subscribeToPlayers = () =>
     const ref = db.ref(`${code}/players`)
     ref.on('value', (snapshot) => {
       const users = snapshot.val()
-      dispatch(readPlayers(Object.values(users)))
+      const players = Object.values(users)
+        .filter(val => typeof val === 'object')
+      dispatch(readPlayers(players))
     })
     dispatch(subscribePlayers(ref))
   }

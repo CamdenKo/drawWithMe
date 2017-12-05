@@ -48,7 +48,7 @@ export class JoinedRoom extends React.Component {
     }
     return (
       <Parent>
-        <BigHeader>Room Joined</BigHeader>
+        <BigHeader>Room Joined {this.props.roomCode.roomCode}</BigHeader>
         {
           this.state.nameChanged !== 'success' && (
             <div>
@@ -80,12 +80,12 @@ export class JoinedRoom extends React.Component {
 
 const mapState = state => ({
   roomCode: state.roomCode,
+  players: state.players,
 })
 
 const mapDispatch = (dispatch, ownProps) => ({
   joinRoom: () => dispatch(joinRoom(ownProps.match.params.roomId.toLowerCase())),
   setName: name => dispatch(setName(name)),
-  // setName: name => console.log(name),
 })
 
 export default withRouter(connect(mapState, mapDispatch)(JoinedRoom))

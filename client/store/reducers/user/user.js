@@ -24,10 +24,10 @@ export const setName = name =>
       const state = getState()
       if (await validName(state.roomCode.roomCode, name)) {
         const ref = db.ref(`${state.roomCode.roomCode}/players`)
-        const value = await ref.once('value')
         const userObj = generateUserObj(name)
         await ref.push(userObj)
-        await db.ref(`${state.roomCode.roomCode}/players/numLoading`).set(value.numLoading - 1)
+        const numLoadingRef = await db.ref(`${state.roomCode.roomCode}/numLoading`).once('value')
+        await db.ref(`${state.roomCode.roomCode}/numLoading`).set(numLoadingRef.val() - 1)
         dispatch(readUser(userObj))
       } else {
         dispatch(errorUser(`${name} is already taken. Try another one?`))
