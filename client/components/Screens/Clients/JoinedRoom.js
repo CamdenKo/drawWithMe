@@ -17,7 +17,6 @@ import {
 } from '../../../components'
 import {
   setName,
-  unload,
   joinRoom,
 } from '../../../store'
 
@@ -39,18 +38,6 @@ export class JoinedRoom extends React.Component {
 
   componentDidMount() {
     this.props.joinRoom()
-    if (window.onbeforeunload !== undefined) {
-      window.onbeforeunload = () => {
-        this.props.unload()
-        return undefined
-      }
-    } else if (window.onpagehide !== undefined) {
-      window.onpagehide = this.props.unload
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.unload()
   }
 
   render() {
@@ -58,7 +45,7 @@ export class JoinedRoom extends React.Component {
       return <Loading />
     }
     if (this.props.roomCode.err) {
-      return <Redirect to="/join" />
+      return <Redirect to="/room" />
     }
     return (
       <Parent>
@@ -97,9 +84,9 @@ const mapState = state => ({
 })
 
 const mapDispatch = (dispatch, ownProps) => ({
-  joinRoom: () => dispatch(joinRoom(ownProps.match.params.roomId.toLowerCase())),
   setName: name => dispatch(setName(name)),
-  unload: () => dispatch(unload()),
+  joinRoom: () => dispatch(joinRoom(ownProps.match.params.roomId.toLowerCase())),
 })
+
 
 export default withRouter(connect(mapState, mapDispatch)(JoinedRoom))

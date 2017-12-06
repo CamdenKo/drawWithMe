@@ -1,5 +1,4 @@
-export { default as JoinRoom } from './JoinRoom'
 export { default as Home } from './Home'
 export { default as Loading } from './Loading'
-export * from './Clients'
-export * from './Hosts'
+export { default as Hosts } from './Hosts'
+export { default as Clients } from './Clients'

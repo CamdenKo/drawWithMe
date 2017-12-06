@@ -37,22 +37,6 @@ export class CreatedRoom extends React.Component {
     this.gameStart = this.gameStart.bind(this)
   }
 
-  componentDidMount() {
-    this.props.requestCreateRoom(this.props.socket)
-    if (window.onbeforeunload !== undefined) {
-      window.onbeforeunload = () => {
-        this.props.unloadHost()
-        return undefined
-      }
-    } else if (window.onpagehide !== undefined) {
-      window.onpagehide = this.props.unloadHost
-    }
-  }
-
-  componentWillUnmount() {
-    this.props.unloadHost()
-  }
-
   gameStart() {
     if (this.props.players.players.length > 1 && this.props.players.numLoading === 0) {
       return (
@@ -104,8 +88,6 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  requestCreateRoom: () => dispatch(createRoom()),
-  unloadHost: () => dispatch(unloadHost()),
   startGame: () => dispatch(startGame()),
 })
 

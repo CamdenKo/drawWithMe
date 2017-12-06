@@ -19,7 +19,7 @@ export const startGame = () =>
       const gameStartedRef = db.ref(`${code}/players/gameStarted`)
       await gameStartedRef.set(true)
       dispatch(readRoom())
-      history.push(`/createdRoom/${code}`)
+      history.push(`/host/${code}`)
     }
   }
 

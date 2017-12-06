@@ -7,7 +7,7 @@ import {
   Button,
   SpecialTextInput,
   SmallHeader,
-} from '../../components'
+} from '../../../components'
 
 const Parent = styled.main`
   display: flex;

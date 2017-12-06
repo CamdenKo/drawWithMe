@@ -6,8 +6,8 @@ import {
 
 export const Home = props => (
   <div>
-    <Button onClick={() => props.history.push('/join')}>Join</Button>
-    <Button onClick={() => props.history.push('/createdRoom')}>Create</Button>
+    <Button onClick={() => props.history.push('/room')}>Join</Button>
+    <Button onClick={() => props.history.push('/host')}>Create</Button>
   </div>
 )
 
