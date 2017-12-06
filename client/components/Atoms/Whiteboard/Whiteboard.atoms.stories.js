@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react'
 
 import {
   Marker,
+  Whiteboard,
 } from '../Whiteboard'
 
 const Blue = Marker.extend`
@@ -11,3 +12,4 @@ const Blue = Marker.extend`
 
 storiesOf('Atoms/Whiteboard', module)
   .add('Blue', () => <Blue />)
+  .add('Whiteboard', () => <Whiteboard />)

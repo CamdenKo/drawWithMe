@@ -9,6 +9,7 @@ import user from './user/user'
 import roomCode from './roomCode/roomCode'
 import word from './word/word'
 import players from './players/players'
+import drawing from './drawing/drawing'
 
 const reducer = combineReducers({
   chat,
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   roomCode,
   players,
   word,
+  drawing,
 })
 
 export default reducer
@@ -28,3 +30,4 @@ export * from './guesses/guesses'
 export * from './room/room'
 export * from './user/user'
 export * from './players/players'
+export * from './drawing/drawing'
