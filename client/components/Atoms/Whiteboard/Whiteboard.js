@@ -1,10 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import equals from 'shallow-equals'
 
-export default class extends React.Component {
+import {
+  postLine,
+} from '../../../store'
+
+class Whiteboard extends React.Component {
   constructor() {
     super()
     this.state = {
       currentMousePosition: [0, 0],
+      drawing: [],
     }
     this.resize = this.resize.bind(this)
     this.pos = this.pos.bind(this)
@@ -29,6 +36,11 @@ export default class extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    nextProps.drawing.drawing
+      .filter(drawing => !this.state.drawing.some(existing => equals(existing, drawing)))
+  }
+
   componentWillUnmount() {
     this.removeEventListeners()
   }
@@ -38,7 +50,8 @@ export default class extends React.Component {
     const lastMousePosition = this.state.currentMousePosition
     this.setState({ currentMousePosition: this.pos(e) })
     if (lastMousePosition && this.state.currentMousePosition) {
-      this.draw(lastMousePosition, this.state.currentMousePosition, this.props.color)
+      this.props.postLine(lastMousePosition, this.state.currentMousePosition, this.props.color)
+      // this.draw(lastMousePosition, this.state.currentMousePosition, this.props.color)
     }
   }
 
@@ -85,9 +98,20 @@ export default class extends React.Component {
   }
 
   render() {
+    this.props.drawing.drawing
+      .forEach(line => this.draw(line.lastMousePosition, line.currentMousePosition, line.color))
     return (
       <canvas ref={(c) => { this.canvas = c }} />
     )
   }
 }
 
+const mapState = state => ({
+  drawing: state.drawing,
+})
+
+const mapDispatch = dispatch => ({
+  postLine: line => dispatch(postLine(line)),
+})
+
+export default connect(mapState, mapDispatch)(Whiteboard)

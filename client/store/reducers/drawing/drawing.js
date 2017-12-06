@@ -18,7 +18,7 @@ const defaultState = {
 export const postLine = line =>
   async (dispatch, getState) => {
     const state = getState()
-    const code = state.roomCode.roomCode
+    const code = state.roomCode.roomCode || 'test'
     await db.ref(`${code}/drawing`).push(line)
   }
 
