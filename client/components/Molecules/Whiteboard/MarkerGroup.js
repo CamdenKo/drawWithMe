@@ -7,6 +7,9 @@ import {
 } from '../../../components'
 
 const Parent = styled.div`
+  position: fixed;
+  left: 10px;
+  top: 10px;
   display: flex;
   flex-direction: column;
   align-items: space-between;
