@@ -18,15 +18,19 @@ class ChatInput extends React.Component {
     }
 
     this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+  }
+
+  onSubmit(e) {
+    e.preventDefault()
+    if (!this.state.value) return
+    this.props.sendMessage(this.state.value)
+    this.setState({
+      value: '',
+    })
   }
 
   onChange(e) {
-    console.log('e', e)
-    if (e.keyCode === 13) {
-      console.log('enter')
-      console.log(e.shiftKey)
-    }
-
     this.setState({
       value: e.target.value,
     })
@@ -34,7 +38,7 @@ class ChatInput extends React.Component {
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.onSubmit}>
         <Input
           onChange={this.onChange}
           value={this.state.value}
@@ -45,7 +49,7 @@ class ChatInput extends React.Component {
 }
 
 const mapDispatch = dispatch => ({
-
+  sendMessage: content => dispatch(sendMessage(content)),
 })
 
-export default connect()(ChatInput)
+export default connect(null, mapDispatch)(ChatInput)
