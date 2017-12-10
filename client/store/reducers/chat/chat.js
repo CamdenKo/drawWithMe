@@ -54,6 +54,23 @@ export const subscribeToMessages = () =>
     })
   }
 
+const writeMessage = (author, content, color = 'black') => ({
+  author,
+  content,
+  color,
+})
+
+export const sendMessage = content =>
+  async (dispatch, getState) => {
+    const state = getState()
+    const author = state.user.user.name
+    const code = state.roomCode.roomCode
+    const ref = db.ref(`${code}/messages`)
+    const message = writeMessage(author, content)
+    await ref.push(message)
+    dispatch(readMessage(message))
+  }
+
 const defaultState = {
   disabled: false,
   subscribed: null,

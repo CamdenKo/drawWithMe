@@ -4,7 +4,7 @@ import {
   deleteRoom as firebaseDeleteRoom,
 } from '../../../firebase/utils/utils'
 import {
-  subscribeToPlayers,
+  subscribe,
 } from '../../../store'
 
 const READ_ROOM_CODE = 'READ_ROOM_CODE'
@@ -20,11 +20,18 @@ export const loadingRoomCode = () => ({ type: LOADING_ROOM_CODE })
 export const createRoom = () =>
   async (dispatch) => {
     dispatch(readRoomCode(await firebaseCreateRoom()))
-    dispatch(subscribeToPlayers())
+    dispatch(subscribe())
+  }
+
+export const hostJoinRoom = () =>
+  (dispatch) => {
+    dispatch(readRoomCode('test'))
+    dispatch(subscribe())
   }
 
 export const deleteRoom = () =>
   async (dispatch, getState) => {
+    if (getState().roomCode.roomCode === 'test') return
     await firebaseDeleteRoom(getState().roomCode.roomCode)
     dispatch(deleteRoomCode())
   }
@@ -42,7 +49,7 @@ export const joinRoom = code =>
       } else {
         await numLoadingRef.set(numLoading.val() + 1)
       }
-      dispatch(subscribeToPlayers())
+      dispatch(subscribe())
     } else {
       dispatch(errorRoomCode(`Doesn't seem to be a room at ${code}. Try again?`))
     }

@@ -25,7 +25,6 @@ export const setName = name =>
       if (await validName(state.roomCode.roomCode, name)) {
         const ref = db.ref(`${state.roomCode.roomCode}/players`)
         const userObj = generateUserObj(name)
-        console.log(userObj)
         await ref.push(userObj)
         const numLoadingRef = await db.ref(`${state.roomCode.roomCode}/numLoading`).once('value')
         await db.ref(`${state.roomCode.roomCode}/numLoading`).set(numLoadingRef.val() - 1)

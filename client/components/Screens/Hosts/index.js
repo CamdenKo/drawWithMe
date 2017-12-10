@@ -1,13 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import { unloadHost, createRoom } from '../../../store'
+import { withRouter } from 'react-router'
+import { unloadHost, createRoom, hostJoinRoom } from '../../../store'
 import Room from './CreatedRoom'
 import Host from './Host'
 
 export class HostIndex extends React.Component {
   componentDidMount() {
-    this.props.requestCreateRoom()
+    if (this.props.match.isExact) {
+      this.props.requestCreateRoom()
+    } else if (ENV === 'dev') {
+      this.props.hostJoinRoom()
+    }
     if (window.onbeforeunload !== undefined) {
       window.onbeforeunload = () => {
         this.props.unloadHost()
@@ -35,6 +40,7 @@ export class HostIndex extends React.Component {
 const mapDispatch = dispatch => ({
   unloadHost: () => dispatch(unloadHost()),
   requestCreateRoom: () => dispatch(createRoom()),
+  hostJoinRoom: () => dispatch(hostJoinRoom()),
 })
 
-export default connect(null, mapDispatch)(HostIndex)
+export default withRouter(connect(null, mapDispatch)(HostIndex))

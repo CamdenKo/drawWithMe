@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 
-module.exports = {
+module.exports = env => ({
   entry: ['babel-polyfill', './client/index.js'],
   output: {
     path: __dirname,
@@ -36,8 +36,8 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      ENV: JSON.stringify(process.env.ENV),
+      ENV: JSON.stringify(env.ENV),
     }),
   ],
-};
+});
 
