@@ -6,6 +6,7 @@ import {
   Whiteboard,
   Message,
   ChatInput,
+  SendButton,
 } from '../Whiteboard'
 import {
   // ChatInput,
@@ -20,3 +21,4 @@ storiesOf('Atoms/Whiteboard', module)
   .add('Whiteboard', () => <Whiteboard />)
   .add('Message', () => <Message message={{ author: 'tom', content: 'darn' }} />)
   .add('ChatInput', () => <ChatInput />)
+  .add('SendButton', () => <SendButton>Send</SendButton>)
