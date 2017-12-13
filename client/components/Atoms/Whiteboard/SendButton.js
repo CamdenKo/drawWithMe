@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export default styled.button`
+export default styled.input`
   margin: 0;
   padding: 10px;
   width: fit-content;
