@@ -45,6 +45,7 @@ export const subscribeToMessages = () =>
     const ref = db.ref(`${code}/messages`)
     ref.on('value', (snapshot) => {
       const messages = snapshot.val()
+      console.log(messages)
       if (Array.isArray(messages)) {
         dispatch(readChats(messages))
       } else {
@@ -58,6 +59,7 @@ const writeMessage = (author, content, color = 'black') => ({
   author,
   content,
   color,
+  time: Date.now(),
 })
 
 export const sendMessage = content =>
@@ -68,7 +70,6 @@ export const sendMessage = content =>
     const ref = db.ref(`${code}/messages`)
     const message = writeMessage(author, content)
     await ref.push(message)
-    dispatch(readMessage(message))
   }
 
 const defaultState = {

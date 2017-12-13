@@ -32,10 +32,10 @@ export class MessageGroup extends React.Component {
   render() {
     const { chat } = this.props.chat
     return (
-      <Parent onClick={this.scrollToBottom}>
+      <Parent>
         {
           chat.map(message => (
-            <Message message={message} />
+            <Message key={message.time} message={message} />
           ))
         }
         <div

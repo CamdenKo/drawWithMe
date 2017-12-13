@@ -4,7 +4,9 @@ import { Provider } from 'react-redux'
 import { Router } from 'react-router'
 import { ThemeProvider } from 'styled-components'
 
-import store from '../client/store'
+import store, {
+  readRoomCode, subscribeToMessages, readUser,
+} from '../client/store'
 import history from '../client/history'
 import theme from '../client/theme'
 
@@ -19,4 +21,14 @@ addDecorator(story => (
     <Provider store={store}><Router history={history}>{story()}</Router></Provider>
   </ThemeProvider>
 ))
+
+const setupRedux = () => {
+  store.dispatch(readRoomCode('test'))
+  store.dispatch(readUser({
+    name: 'testUser',
+  }))
+  store.dispatch(subscribeToMessages())
+}
+
+setupRedux()
 configure(loadStories, module)

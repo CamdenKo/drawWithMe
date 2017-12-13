@@ -28,7 +28,7 @@ export class SendMessage extends React.Component {
   onSubmit(e) {
     e.preventDefault()
     if (!this.state.value.length) return
-    // this.props.sendMessage(this.state.value)
+    this.props.sendMessage(this.state.value)
     this.setState({
       value: '',
     })
