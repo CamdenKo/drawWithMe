@@ -10,7 +10,7 @@ class Whiteboard extends React.Component {
   constructor() {
     super()
     this.state = {
-      currentMousePosition: [0, 0],
+      currentMousePosition: null,
       drawing: [],
     }
     this.resize = this.resize.bind(this)
@@ -39,6 +39,7 @@ class Whiteboard extends React.Component {
   componentWillReceiveProps(nextProps) {
     nextProps.drawing.drawing
       .filter(drawing => !this.state.drawing.some(existing => equals(existing, drawing)))
+      .forEach(drawing => this.draw(drawing.lastMousePosition, drawing.currentMousePosition, drawing.color))
   }
 
   componentWillUnmount() {
