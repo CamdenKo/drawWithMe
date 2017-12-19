@@ -8,7 +8,6 @@ import Host from './Host'
 
 export class HostIndex extends React.Component {
   componentDidMount() {
-    console.log(this.props.match.isExact, ENV)
     if (ENV === 'dev') {
       this.props.hostJoinRoom()
     } else if (this.props.match.isExact) {

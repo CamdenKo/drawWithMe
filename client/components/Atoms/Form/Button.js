@@ -16,12 +16,19 @@ export default (props) => {
     Button.extend`
       color: grey;
       border-color: grey;
+      cursor: not-allowed;
     ` :
-    Button
+    Button.extend`
+      cursor: pointer;
+    `
 
   return (
-    <StyledButton disabled={props.disabled}>
-      {props.children}
+    <StyledButton {...props}>
+      {
+        props.disabled ?
+          <s>{props.children}</s> :
+          props.children
+      }
     </StyledButton>
   )
 }

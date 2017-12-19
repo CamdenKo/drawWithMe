@@ -5,9 +5,21 @@ const READ_ROOM = 'READ_ROOM'
 const ERROR_ROOM = 'ERROR_ROOM'
 const SUBSCRIBE_ROOM = 'SUBSCRIBE_ROOM'
 
-export const readRoom = status => ({ type: READ_ROOM, status })
+export const readRoom = gameStarted => ({ type: READ_ROOM, gameStarted })
 export const errorRoom = err => ({ type: ERROR_ROOM, err })
 export const subscribeRoom = ref => ({ type: SUBSCRIBE_ROOM, ref })
+
+const setPlayerAsDrawer = async (code, playerIndex) => {
+  const playersRef = db.ref(`${code}/players`)
+  const playersValue = (await playersRef.once('value')).val()
+  const playerKey = Object.keys(playersValue)[playerIndex]
+  const updatedPlayer = { ...playersValue[playerKey], drawer: true }
+  const newPlayersValue = {
+    ...playersValue,
+    [playerKey]: updatedPlayer,
+  }
+  await playersRef.set(newPlayersValue)
+}
 
 export const startGame = () =>
   async (dispatch, getState) => {
@@ -20,6 +32,8 @@ export const startGame = () =>
     } else {
       const gameStartedRef = db.ref(`${code}/gameStarted`)
       await gameStartedRef.set(true)
+      // SET FIRST PLAYER AS DRAWER
+      await setPlayerAsDrawer(code, 1)
       dispatch(readRoom())
       history.push(`/host/${code}`)
     }
@@ -45,7 +59,7 @@ const defaultState = {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case READ_ROOM:
-      return { ...state, gameStarted: action.status }
+      return { ...state, gameStarted: action.gameStarted }
     case ERROR_ROOM:
       return { ...state, err: action.err }
     case SUBSCRIBE_ROOM:

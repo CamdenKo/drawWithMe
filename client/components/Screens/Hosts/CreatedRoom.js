@@ -15,6 +15,7 @@ import {
 
 const Parent = styled.main`
   display: flex;
+  min-height: 100%;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -63,6 +64,11 @@ export class CreatedRoom extends React.Component {
   }
 
   render() {
+    if (this.props.room.gameStarted) {
+      return (
+        <div>game started</div>
+      )
+    }
     return (
       <Parent>
         <BigHeader>Created Room</BigHeader>
@@ -82,6 +88,7 @@ export class CreatedRoom extends React.Component {
 const mapState = state => ({
   roomCode: state.roomCode,
   players: state.players,
+  room: state.room,
 })
 
 const mapDispatch = dispatch => ({

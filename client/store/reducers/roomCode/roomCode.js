@@ -25,7 +25,6 @@ export const createRoom = () =>
 
 export const hostJoinRoom = () =>
   (dispatch) => {
-    console.log('host join room')
     dispatch(readRoomCode('test'))
     dispatch(subscribe())
   }

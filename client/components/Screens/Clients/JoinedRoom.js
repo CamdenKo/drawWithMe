@@ -24,6 +24,7 @@ const Parent = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  min-height: 100%;
   align-items: center;
 `
 
@@ -48,6 +49,9 @@ export class JoinedRoom extends React.Component {
     }
     if (this.props.room.gameStarted && this.props.user.isDrawing) {
       return <div>drawing</div>
+    }
+    if (this.props.room.gameStarted) {
+      return <div>gameStarted</div>
     }
     return (
       <Parent>
