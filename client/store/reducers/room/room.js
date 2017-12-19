@@ -10,16 +10,27 @@ export const readRoom = gameStarted => ({ type: READ_ROOM, gameStarted })
 export const errorRoom = err => ({ type: ERROR_ROOM, err })
 export const subscribeRoom = ref => ({ type: SUBSCRIBE_ROOM, ref })
 
-const setPlayerAsDrawer = async (code, playerIndex) => {
+const setPlayerDrawerStatus = async (code, playerIndex, status) => {
   const playersRef = db.ref(`${code}/players`)
   const playersValue = (await playersRef.once('value')).val()
   const playerKey = Object.keys(playersValue)[playerIndex]
-  const updatedPlayer = { ...playersValue[playerKey], drawer: true }
+  const updatedPlayer = { ...playersValue[playerKey], drawer: status }
   const newPlayersValue = {
     ...playersValue,
     [playerKey]: updatedPlayer,
   }
   await playersRef.set(newPlayersValue)
+}
+
+export const rotateDrawer = async (code, currentDrawerIndex) => {
+  const playersRef = db.ref(`${code}/players`)
+  const playersValue = (await playersRef.once('value')).val()
+  const numPlayers = Object.keys(playersValue).length
+  const nextDrawerIndex = currentDrawerIndex === numPlayers - 1 ?
+    0 :
+    currentDrawerIndex + 1
+  await setPlayerDrawerStatus(code, currentDrawerIndex, false)
+  await setPlayerDrawerStatus(code, nextDrawerIndex, true)
 }
 
 export const startGame = () =>
@@ -33,7 +44,7 @@ export const startGame = () =>
     } else {
       const gameStartedRef = db.ref(`${code}/gameStarted`)
       await gameStartedRef.set(true)
-      await setPlayerAsDrawer(code, 1)
+      await setPlayerDrawerStatus(code, 1, true)
       dispatch(generateNewWord())
       // GENERATE WORD
       dispatch(readRoom())
