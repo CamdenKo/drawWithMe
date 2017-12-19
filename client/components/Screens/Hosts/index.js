@@ -8,10 +8,11 @@ import Host from './Host'
 
 export class HostIndex extends React.Component {
   componentDidMount() {
-    if (this.props.match.isExact) {
-      this.props.requestCreateRoom()
-    } else if (ENV === 'dev') {
+    console.log(this.props.match.isExact, ENV)
+    if (ENV === 'dev') {
       this.props.hostJoinRoom()
+    } else if (this.props.match.isExact) {
+      this.props.requestCreateRoom()
     }
     if (window.onbeforeunload !== undefined) {
       window.onbeforeunload = () => {

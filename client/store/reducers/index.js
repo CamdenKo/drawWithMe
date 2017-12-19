@@ -35,7 +35,6 @@ export * from './drawing/drawing'
 
 export const subscribe = () =>
   (dispatch, getState) => {
-    console.log('subscribe', getState())
     dispatch(subscribeToPlayers())
     dispatch(subscribeToRoom())
   }
