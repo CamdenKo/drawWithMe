@@ -29,10 +29,12 @@ export const createRoom = async () => {
 }
 
 export const getWords = async (code) => {
-  const ref = await db.ref(`${code}`).once('value')
-  return Array.isArray(ref.val()) ?
-    ref.val() :
-    Object.values(ref.val())
+  const ref = await db.ref(`${code}/usedWords`).once('value')
+  const words = ref.val()
+  if (!words) return []
+  return Array.isArray(words) ?
+    words :
+    Object.values(words)
 }
 
 export const generateWord = async (code, usedWords) => {

@@ -12,8 +12,11 @@ export const subscribeWord = ref => ({ type: SUBSCRIBE_WORD, ref })
 export const unsubscribeWord = () => ({ type: UNSUBSCRIBE_WORD })
 
 export const generateNewWord = () =>
-  async (dispatch) => {
-    dispatch(readWord(generateWord))
+  async (dispatch, getState) => {
+    const code = (getState()).roomCode.roomCode
+    const newWord = await generateWord(code)
+    await db.ref(`${code}/usedWords`).push(newWord)
+    db.ref(`${code}/word`).set(newWord)
   }
 
 export const subscribeToWords = () =>
@@ -22,11 +25,8 @@ export const subscribeToWords = () =>
     const code = getState().roomCode.roomCode
     const ref = db.ref(`${code}/word`)
     ref.on('value', (snapshot) => {
-      const words = snapshot.val()
-      const newestWord = words[words.length - 1]
-      if (newestWord !== getState().word.word) {
-        dispatch(readWord(newestWord))
-      }
+      const word = snapshot.val()
+      dispatch(readWord(word))
     })
     dispatch(subscribeWord(ref))
   }

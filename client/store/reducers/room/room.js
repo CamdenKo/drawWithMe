@@ -1,5 +1,6 @@
 import db from '../../../firebase/db'
 import history from '../../../history'
+import { generateNewWord } from '../../index';
 
 const READ_ROOM = 'READ_ROOM'
 const ERROR_ROOM = 'ERROR_ROOM'
@@ -32,8 +33,9 @@ export const startGame = () =>
     } else {
       const gameStartedRef = db.ref(`${code}/gameStarted`)
       await gameStartedRef.set(true)
-      // SET FIRST PLAYER AS DRAWER
       await setPlayerAsDrawer(code, 1)
+      dispatch(generateNewWord())
+      // GENERATE WORD
       dispatch(readRoom())
       history.push(`/host/${code}`)
     }
