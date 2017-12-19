@@ -24,7 +24,6 @@ const Parent = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 100%;
   align-items: center;
 `
 
@@ -47,11 +46,16 @@ export class JoinedRoom extends React.Component {
     if (this.props.roomCode.err) {
       return <Redirect to="/room" />
     }
+    if (this.props.room.gameStarted && this.props.user.isDrawing) {
+      return <div>drawing</div>
+    }
     return (
       <Parent>
         <BigHeader>Room Joined {this.props.roomCode.roomCode}</BigHeader>
         {
-          !this.props.user.nameSet && (
+          this.props.user.nameSet ? (
+            <SmallHeader>Just one moment {this.props.user.user.name}, waiting for all players to pic their name.</SmallHeader>
+          ) : (
             <div>
               <SmallHeader>Set Name</SmallHeader>
               <TextInput
@@ -81,6 +85,7 @@ const mapState = state => ({
   roomCode: state.roomCode,
   players: state.players,
   user: state.user,
+  room: state.room,
 })
 
 const mapDispatch = (dispatch, ownProps) => ({

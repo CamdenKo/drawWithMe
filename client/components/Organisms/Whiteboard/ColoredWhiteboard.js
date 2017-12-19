@@ -20,12 +20,12 @@ export default class extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {
           this.props.drawing && <MarkerGroup onClick={this.changeColor} />
         }
         <Whiteboard color={this.state.color} />
-      </div>
+      </React.Fragment>
     )
   }
 }

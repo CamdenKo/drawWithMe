@@ -34,7 +34,8 @@ export * from './players/players'
 export * from './drawing/drawing'
 
 export const subscribe = () =>
-  (dispatch) => {
+  (dispatch, getState) => {
+    console.log('subscribe', getState())
     dispatch(subscribeToPlayers())
     dispatch(subscribeToRoom())
   }
