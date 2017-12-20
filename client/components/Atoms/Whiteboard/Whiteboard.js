@@ -27,6 +27,8 @@ class Whiteboard extends React.Component {
     window.addEventListener('resize', this.resize)
     window.addEventListener('mousedown', this.mousedown)
     window.addEventListener('mousemove', this.mousemove)
+    window.addEventListener('touchstart', this.mousedown)
+    window.addEventListener('touchmove', this.mousemove)
     if (window.onbeforeunload !== undefined) {
       window.onbeforeunload = () => {
         this.removeEventListeners()
@@ -73,6 +75,8 @@ class Whiteboard extends React.Component {
     window.removeEventListener('resize', this.resize)
     window.removeEventListener('mousedown', this.mousedown)
     window.removeEventListener('mousemove', this.mousemove)
+    window.removeEventListener('touchstart', this.mousedown)
+    window.removeEventListener('touchmove', this.mousemove)
   }
 
   draw(lastMousePosition, currentMousePosition, color = 'black') {
