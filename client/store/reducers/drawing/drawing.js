@@ -26,10 +26,14 @@ export const subscribeToDrawing = () =>
   (dispatch, getState) => {
     const state = getState()
     const code = state.roomCode.roomCode
-    db.ref(`${code}/drawing`).on('child_added', (snapshot) => {
-      const line = snapshot.val()
-      dispatch(readLine(line))
+    const ref = db.ref(`${code}/drawing`)
+    ref.on('value', (snapshot) => {
+      const lines = snapshot.val()
+      if (lines) {
+        dispatch(readDrawing(Object.values(lines)))
+      }
     })
+    dispatch(subscribeDrawing(ref))
   }
 
 export const deleteDrawing = () =>

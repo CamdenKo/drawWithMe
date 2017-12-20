@@ -19,6 +19,7 @@ import {
   setName,
   joinRoom,
 } from '../../../store'
+import DrawingScreen from './DrawingScreen'
 
 const Parent = styled.main`
   display: flex;
@@ -41,13 +42,14 @@ export class JoinedRoom extends React.Component {
   }
 
   render() {
+    return <DrawingScreen />
     if (this.props.roomCode.loading) {
       return <Loading />
     }
     if (this.props.roomCode.err) {
       return <Redirect to="/room" />
     }
-    if (this.props.room.gameStarted && this.props.user.isDrawing) {
+    if (this.props.room.gameStarted && this.props.user.user.drawer) {
       return <div>drawing</div>
     }
     if (this.props.room.gameStarted) {
@@ -60,7 +62,7 @@ export class JoinedRoom extends React.Component {
           this.props.user.nameSet ? (
             <SmallHeader>Just one moment {this.props.user.user.name}, waiting for all players to pic their name.</SmallHeader>
           ) : (
-            <div>
+            <React.Fragment>
               <SmallHeader>Set Name</SmallHeader>
               <TextInput
                 placeholder="Name"
@@ -76,7 +78,7 @@ export class JoinedRoom extends React.Component {
               {
                 this.props.user.err && <ErrorText>{this.props.user.err}</ErrorText>
               }
-            </div>
+            </React.Fragment>
           )
         }
         <PlayerList />

@@ -11,9 +11,12 @@ const BottomText = BigHeader.extend`
   margin-left: auto;
   margin-right: auto;
   bottom: 0;
+  left: 0;
+  right: 0;
+  width: fit-content;
 `
 
-export const DrawingScreen = props => (
+const DrawingScreen = props => (
   <React.Fragment>
     <ColoredWhiteboard drawing />
     <BottomText>{props.word.word}</BottomText>

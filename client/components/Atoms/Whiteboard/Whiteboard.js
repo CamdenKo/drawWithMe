@@ -18,6 +18,7 @@ class Whiteboard extends React.Component {
     this.mousedown = this.mousedown.bind(this)
     this.mousemove = this.mousemove.bind(this)
     this.removeEventListeners = this.removeEventListeners.bind(this)
+    this.clearCanvas = this.clearCanvas.bind(this)
   }
 
   componentDidMount() {
@@ -37,8 +38,8 @@ class Whiteboard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.clearCanvas()
     nextProps.drawing.drawing
-      .filter(drawing => !this.state.drawing.some(existing => equals(existing, drawing)))
       .forEach(drawing => this.draw(drawing.lastMousePosition, drawing.currentMousePosition, drawing.color))
   }
 
@@ -46,13 +47,21 @@ class Whiteboard extends React.Component {
     this.removeEventListeners()
   }
 
+  clearCanvas() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+  }
+
   mousemove(e) {
     if (!e.buttons) return
     const lastMousePosition = this.state.currentMousePosition
     this.setState({ currentMousePosition: this.pos(e) })
     if (lastMousePosition && this.state.currentMousePosition) {
-      this.props.postLine(lastMousePosition, this.state.currentMousePosition, this.props.color)
-      // this.draw(lastMousePosition, this.state.currentMousePosition, this.props.color)
+      const lineToPost = {
+        lastMousePosition,
+        currentMousePosition: this.state.currentMousePosition,
+        color: this.props.color,
+      }
+      this.props.postLine(lineToPost)
     }
   }
 

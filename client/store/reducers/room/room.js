@@ -44,7 +44,7 @@ export const startGame = () =>
     } else {
       const gameStartedRef = db.ref(`${code}/gameStarted`)
       await gameStartedRef.set(true)
-      await setPlayerDrawerStatus(code, 1, true)
+      await setPlayerDrawerStatus(code, 0, true)
       dispatch(generateNewWord())
       // GENERATE WORD
       dispatch(readRoom())
@@ -53,7 +53,7 @@ export const startGame = () =>
   }
 
 export const subscribeToRoom = () =>
-  async (dispatch, getState) => {
+  (dispatch, getState) => {
     const state = getState()
     const code = state.roomCode.roomCode
     const ref = db.ref(`${code}/gameStarted`).on('value', (snapshot) => {

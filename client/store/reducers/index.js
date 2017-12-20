@@ -10,7 +10,7 @@ import roomCode from './roomCode/roomCode'
 import word from './word/word'
 import players from './players/players'
 import drawing from './drawing/drawing'
-import { subscribeToPlayers, subscribeToRoom, subscribeToWords } from '../index';
+import { subscribeToPlayers, subscribeToRoom, subscribeToWords, subscribeToDrawing } from '../index';
 
 const reducer = combineReducers({
   chat,
@@ -38,4 +38,5 @@ export const subscribe = () =>
     dispatch(subscribeToPlayers())
     dispatch(subscribeToRoom())
     dispatch(subscribeToWords())
+    dispatch(subscribeToDrawing())
   }
